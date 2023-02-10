@@ -56,15 +56,47 @@
 		A54D092A2996EFDF007CF531 /* Weather */ = {
 			isa = PBXGroup;
 			children = (
-				A54D092B2996EFDF007CF531 /* AppDelegate.swift */,
-				A54D092D2996EFDF007CF531 /* SceneDelegate.swift */,
-				A54D092F2996EFDF007CF531 /* ViewController.swift */,
-				A54D09312996EFDF007CF531 /* Main.storyboard */,
-				A54D09342996EFE0007CF531 /* Assets.xcassets */,
-				A54D09362996EFE0007CF531 /* LaunchScreen.storyboard */,
+				A54D093F2996F049007CF531 /* Assets */,
+				A54D09412996F066007CF531 /* Controllers */,
+				A54D09422996F073007CF531 /* Storyboards */,
+				A54D09402996F055007CF531 /* Supported Files */,
 				A54D09392996EFE0007CF531 /* Info.plist */,
 			);
 			path = Weather;
+			sourceTree = "<group>";
+		};
+		A54D093F2996F049007CF531 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				A54D09342996EFE0007CF531 /* Assets.xcassets */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		A54D09402996F055007CF531 /* Supported Files */ = {
+			isa = PBXGroup;
+			children = (
+				A54D092B2996EFDF007CF531 /* AppDelegate.swift */,
+				A54D092D2996EFDF007CF531 /* SceneDelegate.swift */,
+			);
+			path = "Supported Files";
+			sourceTree = "<group>";
+		};
+		A54D09412996F066007CF531 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				A54D092F2996EFDF007CF531 /* ViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		A54D09422996F073007CF531 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				A54D09312996EFDF007CF531 /* Main.storyboard */,
+				A54D09362996EFE0007CF531 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -293,8 +325,10 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -321,8 +355,10 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
