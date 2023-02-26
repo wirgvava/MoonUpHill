@@ -15,30 +15,16 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="dEA-EI-tTg">
-                                <rect key="frame" x="-174.66666666666666" y="0.0" width="742.33333333333337" height="1192"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="742" id="BGF-EQ-n0o"/>
-                                    <constraint firstAttribute="height" constant="1192" id="yJX-0o-bz1"/>
-                                </constraints>
-                            </imageView>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="dEA-EI-tTg" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="Bga-6s-Rpe"/>
-                            <constraint firstItem="dEA-EI-tTg" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="GJc-Bu-FJd"/>
-                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="52.671755725190835" y="374.64788732394368"/>
+            <point key="canvasLocation" x="97" y="63"/>
         </scene>
     </scenes>
     <resources>
-        <image name="background" width="390" height="844"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
