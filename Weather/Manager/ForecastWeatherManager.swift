@@ -22,14 +22,14 @@ import SwiftyJSON
 class ForecastWeatherManager {
     
     private let apiKey = "a1f8100b3fac9d0771123ea99dc27a04"
-    var lat: Double = 0
-    var lon: Double = 0
+    var latitude: Double = 0
+    var longitude: Double = 0
     var forecastWeather: [ForecastWeatherData] = []
     
     
     
     // fetching Geocodin API for getting Lat % Lon doubles of City for OneCall API
-    func fetchLocationData(city: String, completion: @escaping (Result<GeocodingResponse, Error>) -> Void){
+    func fetchLocationData(city: String){
         let query = city.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? city
         let geocodingURL = "https://api.openweathermap.org/geo/1.0/direct?q=\(query)&limit=5&appid=\(apiKey)"
         
@@ -39,41 +39,44 @@ class ForecastWeatherManager {
             do {
                 let decoder = JSONDecoder()
                 let geocodingResponse = try decoder.decode([GeocodingResponse].self, from: data)
-                
+
                 // Save the lat, lon data here
-                self.lat = geocodingResponse[0].lat
-                self.lon = geocodingResponse[0].lon
-                self.forecastFetch(lat: self.lat, lon: self.lon, completion: completion)
-                print(self.lat, self.lon)
-                
+                self.latitude = geocodingResponse[0].lat
+                self.longitude = geocodingResponse[0].lon
+//                self.forecastFetch(lat: self.lat, lon: self.lon, completion: completion)
+                print("LOCATION: \(self.latitude), \(self.longitude)")
+
             } catch let error {
                 print("ERROR: \(error.localizedDescription)")
             }
         }
     }
     
+    
+    
+    
     // fetching OneCall API by Lat & Lon for daily forecast
-    func forecastFetch(lat: Double, lon: Double, completion: @escaping (Result<GeocodingResponse, Error>) -> Void){
-        let forecastURL = "https://api.openweathermap.org/data/3.0/onecall?lat=\(lat)&lon=\(lon)&appid=\(apiKey)"
-        
-        AF.request(forecastURL)
-            .validate()
-            .responseDecodable(of: ForecastWeatherData.self, queue: .main, decoder: JSONDecoder()) { (response) in
-                switch response.result {
-                case .success:
-                    guard let data = response.data else { return }
-                   
-                    do {
-                        let decoder = JSONDecoder()
-                        let forecastResponse = try decoder.decode([ForecastWeatherData].self, from: data)
-                        print(forecastResponse)
-                    } catch let error {
-                        print("ERROR1: \(error.localizedDescription)")
-                    }
-                    
-                case .failure(let error):
-                    print("ERROR2: \(error.localizedDescription)")
-                }
-        }
-    }
+//    func forecastFetch(lat: Double, lon: Double, completion: @escaping (Result<[GeocodingResponse], Error>) -> Void){
+//        let forecastURL = "https://api.openweathermap.org/data/3.0/onecall?lat=\(lat)&lon=\(lon)&appid=\(apiKey)"
+//
+//        AF.request(forecastURL)
+//            .validate()
+//            .responseDecodable(of: ForecastWeatherData.self, queue: .main, decoder: JSONDecoder()) { (response) in
+//                switch response.result {
+//                case .success:
+//                    guard let data = response.data else { return }
+//
+//                    do {
+//                        let decoder = JSONDecoder()
+//                        let forecastResponse = try decoder.decode([ForecastWeatherData].self, from: data)
+//                        print(forecastResponse)
+//                    } catch let error {
+//                        print("ERROR1: \(error.localizedDescription)")
+//                    }
+//
+//                case .failure(let error):
+//                    print("ERROR2: \(error.localizedDescription)")
+//                }
+//        }
+//    }
 }

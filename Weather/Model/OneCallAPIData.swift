@@ -10,15 +10,13 @@ import Foundation
 // MARK: - Welcome
 struct ForecastWeatherData: Decodable {
     let lat, lon: Double
-    let current: Current
     let daily: [Daily]
-}
-
-// MARK: - Current
-struct Current: Decodable {
-    let dt: Int
-    let temp: Double
-    let weather: [ForecastWeather]
+    
+    var forecastModel: ForecastModel {
+        return ForecastModel(dt: daily.first?.dt ?? 0,
+                             temp: daily.first?.temp.day ?? 0,
+                             description: daily.first?.weather.description ?? "")
+    }
 }
 
 // MARK: - Weather
@@ -40,3 +38,8 @@ struct Temp: Decodable {
     let day: Double
 }
 
+struct ForecastModel {
+    let dt: Int
+    let temp: Double
+    let description: String
+}

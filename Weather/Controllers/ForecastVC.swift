@@ -6,8 +6,10 @@
 //
 
 import UIKit
+import CoreMotion
 import SwiftyJSON
 import Loaf
+import CoreLocation
 
 class ForecastVC: UIViewController, UISheetPresentationControllerDelegate {
     
@@ -16,17 +18,16 @@ class ForecastVC: UIViewController, UISheetPresentationControllerDelegate {
     override var sheetPresentationController: UISheetPresentationController?{
         presentationController as? UISheetPresentationController
     }
-    let manager = ForecastWeatherManager()
+//    let manager = WeatherManager()
+    let motionManager = CMMotionManager()
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        fetchForecastWeather(byCity: "Tbilisi")
-        
+     
         let blur = UIBlurEffect(style: .light)
         let blurView = UIVisualEffectView(effect: blur)
         view.backgroundColor = .clear
-//        view.backgroundColor = UIColor(white: 0, alpha: 0)
         blurView.frame = view.bounds
         view.addSubview(blurView)
         view.sendSubviewToBack(blurView)
@@ -42,40 +43,13 @@ class ForecastVC: UIViewController, UISheetPresentationControllerDelegate {
         collectionView.layer.shadowOpacity = 0.3
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        motionManager.stopAccelerometerUpdates()
+    }
+    
     
 }
-
-extension ForecastVC{
-    private func fetchForecastWeather(byCity city: String){
-        manager.fetchLocationData(city: city) { (result) in
-            self.handleResult(result)
-        }
-    }
-
-    private func handleResult(_ result: Result<GeocodingResponse, Error>){
-        switch result {
-        case .success(let forecast):
-            self.updateView(with: forecast)
-        case .failure:
-            self.handleError()
-        }
-    }
-
-    private func handleError(){
-        Loaf("Error", state: .info , location: .bottom, sender: self).show()
-    }
-
-    private func updateView(with forecast: GeocodingResponse){
-        let cell = ForecastCollectionViewCell()
-        let dailyForecast = forecast.forecastWeather.daily
-        cell.dateLabel.text = dailyForecast.first?.dt.toString()
-        cell.tempLabel.text = dailyForecast.first?.temp.day.toString()
-        cell.conditionLabel.text = dailyForecast.first?.weather.first?.description
-//        cell.conditionImage.image =
-        print("SUCCESS")
-    }
-}
-
 
 extension ForecastVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -86,7 +60,7 @@ extension ForecastVC: UICollectionViewDelegate, UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! ForecastCollectionViewCell
         
         cell.dateLabel.text = "Friday"
-        cell.tempLabel.text = "19"
+        cell.tempLabel.text = "19°C"
         cell.conditionLabel.text = "Cloudy"
         cell.conditionImage.image = UIImage(named: "imCloud")
         cell.backgroundColor = UIColor.white
@@ -95,6 +69,9 @@ extension ForecastVC: UICollectionViewDelegate, UICollectionViewDataSource {
         cell.conditionImage.layer.shadowOffset = CGSize(width: 2, height: 2)
         cell.conditionImage.layer.shadowRadius = 2.5
         cell.conditionImage.layer.shadowOpacity = 0.3
+
+
+        
         
         return cell
     }

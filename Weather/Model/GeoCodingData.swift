@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 struct GeocodingResponse: Decodable {
     let name: String
     let lat: Double

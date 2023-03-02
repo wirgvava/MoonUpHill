@@ -9,6 +9,7 @@ import UIKit
 import Lottie
 import Loaf
 import CoreLocation
+import CoreMotion
 
 class ViewController: UIViewController {
 
@@ -26,6 +27,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var locationButton: UIButton!
     
     // MARK: - Constants & Variables
+    let motionManager = CMMotionManager()
+
     override var prefersStatusBarHidden: Bool { return true }
     private let weatherManager = WeatherManager()
     weak var delegate:  WeatherViewControllerDelegate?
@@ -44,6 +47,11 @@ class ViewController: UIViewController {
         setupGestures()
         texFieldStroke.isHidden = true
         textField.isHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        motionManager.stopAccelerometerUpdates()
     }
 
     // MARK: - Actions
@@ -100,6 +108,17 @@ class ViewController: UIViewController {
         myView.addSubview(lottieLocationButton)
         lottieLocationButton.play()
         lottieLocationButton.loopMode = .playOnce
+        // CoreMotion
+        motionManager.deviceMotionUpdateInterval = 0.01
+        motionManager.startDeviceMotionUpdates(to: .main) { (data, error) in
+            guard let data = data, error == nil else { return }
+            
+            let rotation = atan2(data.gravity.x,
+                                 data.gravity.y) - .pi
+            lottieLocationButton.transform =
+            CGAffineTransform(rotationAngle: CGFloat(rotation))
+        }
+        
     }
 
     
