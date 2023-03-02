@@ -34,12 +34,12 @@ class ViewController: UIViewController {
         manager.delegate = self
         return manager
     }()
-
+    
     
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         lottieAnimation()
         setupGestures()
         texFieldStroke.isHidden = true

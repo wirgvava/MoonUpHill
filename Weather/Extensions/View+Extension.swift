@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import AudioToolbox
 
 extension UIView {
     func shake() {
@@ -17,5 +18,8 @@ extension UIView {
         shake.fromValue = NSValue(cgPoint: CGPoint(x: self.center.x - 10, y: self.center.y))
         shake.toValue = NSValue(cgPoint: CGPoint(x: self.center.x + 10, y: self.center.y))
         layer.add(shake, forKey: "position")
+        
+        // Play the vibration sound
+        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
     }
 }

@@ -12,12 +12,14 @@ class WeatherManager {
     
     private let API_KEY = "a1f8100b3fac9d0771123ea99dc27a04"
     
+    // fetch by Location
     func fetchWeather(lat: Double, lon: Double, completion: @escaping (Result<WeatherModel, Error>) -> Void) {
         let path = "https://api.openweathermap.org/data/2.5/weather?appid=%@&units=metric&lat=%f&lon=%f"
         let urlString = String(format: path, API_KEY, lat, lon)
         handleRequest(urlString: urlString, completion: completion)
     }
     
+    // fetch by City
     func fetchWeather(byCity city: String, completion: @escaping (Result<WeatherModel, Error>) -> Void){
         let query = city.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? city
         let path = "https://api.openweathermap.org/data/2.5/weather?q=%@&appid=%@&units=metric"
