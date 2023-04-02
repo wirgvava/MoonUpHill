@@ -23,7 +23,6 @@
 		A59AB90729A3FEB50029EA4E /* launchScreen.json in Resources */ = {isa = PBXBuildFile; fileRef = A59AB90629A3FEB50029EA4E /* launchScreen.json */; };
 		A59AB90B29A41BD00029EA4E /* ForecastVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59AB90A29A41BD00029EA4E /* ForecastVC.swift */; };
 		A5BE3E5B29AA6727001711DD /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BE3E5A29AA6727001711DD /* View+Extension.swift */; };
-		A5D46C2029AF8A24001EC0B2 /* OneCallAPIData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D46C1F29AF8A24001EC0B2 /* OneCallAPIData.swift */; };
 		A5D46C2229AF9C07001EC0B2 /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D46C2129AF9C07001EC0B2 /* Int+Extension.swift */; };
 		A5E8869D29A6569900217C1B /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E8869C29A6569900217C1B /* WeatherData.swift */; };
 		A5E8869F29A656AA00217C1B /* WeatherManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E8869E29A656AA00217C1B /* WeatherManager.swift */; };
@@ -48,7 +47,6 @@
 		A59AB90629A3FEB50029EA4E /* launchScreen.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = launchScreen.json; sourceTree = "<group>"; };
 		A59AB90A29A41BD00029EA4E /* ForecastVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastVC.swift; sourceTree = "<group>"; };
 		A5BE3E5A29AA6727001711DD /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
-		A5D46C1F29AF8A24001EC0B2 /* OneCallAPIData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneCallAPIData.swift; sourceTree = "<group>"; };
 		A5D46C2129AF9C07001EC0B2 /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		A5E8869C29A6569900217C1B /* WeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
 		A5E8869E29A656AA00217C1B /* WeatherManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherManager.swift; sourceTree = "<group>"; };
@@ -172,7 +170,6 @@
 			isa = PBXGroup;
 			children = (
 				A5E8869C29A6569900217C1B /* WeatherData.swift */,
-				A5D46C1F29AF8A24001EC0B2 /* OneCallAPIData.swift */,
 				A5E886A329A6634400217C1B /* WeatherDataFailure.swift */,
 			);
 			path = Model;
@@ -287,7 +284,6 @@
 				A5E8869F29A656AA00217C1B /* WeatherManager.swift in Sources */,
 				A59AB90B29A41BD00029EA4E /* ForecastVC.swift in Sources */,
 				A54D092E2996EFDF007CF531 /* SceneDelegate.swift in Sources */,
-				A5D46C2029AF8A24001EC0B2 /* OneCallAPIData.swift in Sources */,
 				A5E8869D29A6569900217C1B /* WeatherData.swift in Sources */,
 				A51FCCBE29A78F8700619400 /* WeatherViewControllerDelegate.swift in Sources */,
 				A51FCCBB29A78DB900619400 /* Double+Extension.swift in Sources */,
@@ -368,7 +364,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -422,7 +418,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

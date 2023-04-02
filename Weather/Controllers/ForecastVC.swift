@@ -10,20 +10,26 @@ import CoreMotion
 import SwiftyJSON
 import Loaf
 import CoreLocation
+import Alamofire
 
 class ForecastVC: UIViewController, UISheetPresentationControllerDelegate {
     
+    // MARK: - Oulets
     @IBOutlet weak var collectionView: UICollectionView!
     
+    // MARK: - Variables & Constants
+    let weatherManager = WeatherManager()
+    let forecast = WeatherManager.forecastWeather
     override var sheetPresentationController: UISheetPresentationController?{
         presentationController as? UISheetPresentationController
     }
-//    let manager = WeatherManager()
-    let motionManager = CMMotionManager()
-
-
+    
+    // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        weatherManager.fetchForecast()
+        print("lat: \(ViewController.lat) lon: \(ViewController.lon)")
      
         let blur = UIBlurEffect(style: .light)
         let blurView = UIVisualEffectView(effect: blur)
@@ -42,39 +48,20 @@ class ForecastVC: UIViewController, UISheetPresentationControllerDelegate {
         collectionView.layer.shadowRadius = 2.5
         collectionView.layer.shadowOpacity = 0.3
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        motionManager.stopAccelerometerUpdates()
-    }
-    
-    
 }
+
+
 
 extension ForecastVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return forecast.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! ForecastCollectionViewCell
         
-        cell.dateLabel.text = "Friday"
-        cell.tempLabel.text = "19°C"
-        cell.conditionLabel.text = "Cloudy"
-        cell.conditionImage.image = UIImage(named: "imCloud")
-        cell.backgroundColor = UIColor.white
-        cell.layer.cornerRadius = 20
-        cell.conditionImage.layer.shadowColor = CGColor(red: 0, green: 0, blue: 0, alpha: 1)
-        cell.conditionImage.layer.shadowOffset = CGSize(width: 2, height: 2)
-        cell.conditionImage.layer.shadowRadius = 2.5
-        cell.conditionImage.layer.shadowOpacity = 0.3
-
-
-        
-        
+        let forecast = forecast[indexPath.row]
+        cell.configure(with: forecast)
         return cell
     }
-    
-    
 }

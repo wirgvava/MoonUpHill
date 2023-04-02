@@ -7,36 +7,36 @@
 
 import Foundation
 import Alamofire
+import SwiftyJSON
 
 class WeatherManager {
-    
-    var forecastWeather: [ForecastModel] = []
+   
+    static var forecastWeather = [Daily]()
     private let API_KEY = "a1f8100b3fac9d0771123ea99dc27a04"
     
-    
     // fetching OneCall API by Lat & Lon for daily forecast
-    func forecastFetch(lat: Double, lon: Double, completion: @escaping (Result<ForecastModel, Error>) -> Void){
-        let urlString = "https://api.openweathermap.org/data/3.0/onecall?lat=\(lat)&lon=\(lon)&appid=\(API_KEY)"
-//        let urlString = String(format: path, lat, lon, API_KEY)
-
-        AF.request(urlString)
-            .validate()
-            .responseDecodable(of: ForecastWeatherData.self, queue: .main, decoder: JSONDecoder()) { (response) in
+    func fetchForecast(){
+        let lat = ViewController.lat
+        let lon = ViewController.lat
+        let weatherUrl = "https://api.openweathermap.org/data/3.0/onecall?lat=\(lat)&lon=\(lon)&exclude=current,minutely,hourly,alerts&appid=\(API_KEY)&units=metric"
+        
+        AF.request(weatherUrl).responseJSON { (response) in
             switch response.result {
-            case .success(let forecastWeatherData):
-                let forecastModel = forecastWeatherData.forecastModel
-                self.forecastWeather.append(forecastModel)
-                completion(.success(forecastModel))
-            case .failure(let error):
-                if let err = self.getWeatherError(error: error, data: response.data) {
-                    completion(.failure(err))
-                } else {
-                    completion(.failure(error))
+            case .success(let value):
+                guard let data = try? JSONSerialization.data(withJSONObject: value, options: []) else { return }
+                let decoder = JSONDecoder()
+                do {
+                    let weatherData = try decoder.decode(ForecastWeatherData.self, from: data)
+                    WeatherManager.forecastWeather = weatherData.daily
+                } catch let error {
+                    print(error.localizedDescription)
                 }
+            case .failure(let error):
+                print(error.localizedDescription)
             }
         }
     }
-
+    
     
     // fetch by Location
     func fetchWeather(lat: Double, lon: Double, completion: @escaping (Result<WeatherModel, Error>) -> Void) {
@@ -54,7 +54,6 @@ class WeatherManager {
     }
     
     private func handleRequest(urlString: String, completion: @escaping (Result<WeatherModel, Error>) -> Void){
-        
         AF.request(urlString)
             .validate()
             .responseDecodable(of: WeatherData.self, queue: .main, decoder: JSONDecoder()) { (response) in

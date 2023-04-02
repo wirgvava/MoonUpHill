@@ -11,7 +11,7 @@ import Loaf
 import CoreLocation
 import CoreMotion
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextFieldDelegate {
 
     // MARK: - Outlets
     
@@ -28,7 +28,6 @@ class ViewController: UIViewController {
     
     // MARK: - Constants & Variables
     let motionManager = CMMotionManager()
-
     override var prefersStatusBarHidden: Bool { return true }
     private let weatherManager = WeatherManager()
     weak var delegate:  WeatherViewControllerDelegate?
@@ -37,7 +36,8 @@ class ViewController: UIViewController {
         manager.delegate = self
         return manager
     }()
-    
+    static var lat: Double = 0
+    static var lon: Double = 0
     
     // MARK: - View Life Cycle
     override func viewDidLoad() {
@@ -47,6 +47,12 @@ class ViewController: UIViewController {
         setupGestures()
         texFieldStroke.isHidden = true
         textField.isHidden = true
+        DispatchQueue.main.async {
+            ViewController.lat = self.locationManager.location?.coordinate.latitude ?? 0
+            ViewController.lon = self.locationManager.location?.coordinate.longitude ?? 0
+            self.weatherManager.fetchForecast()
+        }
+        self.textField.delegate = self
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -68,6 +74,25 @@ class ViewController: UIViewController {
     }
     
     @IBAction func searchBtnTapped(_ sender: UIButton) {
+        searchAction()
+    }
+    
+    @IBAction func forecastView(_ sender: UIButton) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let forecastPresentationController = storyboard.instantiateViewController(withIdentifier: "ForecastVC") as! ForecastVC
+        self.present(forecastPresentationController, animated: true, completion: nil)
+    }
+    
+    // MARK: - Methods
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        self.view.endEditing(true)
+        searchAction()
+        return true
+    }
+    
+    func searchAction(){
         if textField.isHidden == true {
             searchBarAnimation()
         } else {
@@ -80,15 +105,7 @@ class ViewController: UIViewController {
             textField.text = ""
         }
     }
-    
-    @IBAction func forecastView(_ sender: UIButton) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let forecastPresentationController = storyboard.instantiateViewController(withIdentifier: "ForecastVC") as! ForecastVC
-        self.present(forecastPresentationController, animated: true, completion: nil)
-    }
-    
-    // MARK: - Methods
-    
+   
     func searchBarAnimation(){
         searchBtnHorizontalConstraint.constant = (textField.frame.maxX / 2) - 5
         UIView.animate(withDuration: 0.3) {
@@ -158,6 +175,10 @@ class ViewController: UIViewController {
         conditionLabel.text = model.conditionDescription
         conditionBackground.image = UIImage(named: model.conditionBackground)
         cityLabel.text = model.cityName
+        DispatchQueue.main.async {
+            ViewController.lat = model.lat
+            ViewController.lon = model.lon
+        }
     }
     
     private func promptForLocationPermision(){
