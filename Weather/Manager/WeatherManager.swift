@@ -7,50 +7,41 @@
 
 import Foundation
 import Alamofire
-import SwiftyJSON
 
 class WeatherManager {
    
     static var forecastWeather = [Daily]()
     private let API_KEY = "a1f8100b3fac9d0771123ea99dc27a04"
     
-    // fetching OneCall API by Lat & Lon for daily forecast
+    //MARK: - Fetching OneCall API by Lat & Lon for daily forecast
     func fetchForecast(){
         let lat = ViewController.lat
         let lon = ViewController.lat
-        let weatherUrl = "https://api.openweathermap.org/data/3.0/onecall?lat=\(lat)&lon=\(lon)&exclude=current,minutely,hourly,alerts&appid=\(API_KEY)&units=metric"
-        
-        AF.request(weatherUrl).responseJSON { (response) in
-            switch response.result {
-            case .success(let value):
-                guard let data = try? JSONSerialization.data(withJSONObject: value, options: []) else { return }
-                let decoder = JSONDecoder()
-                do {
-                    let weatherData = try decoder.decode(ForecastWeatherData.self, from: data)
-                    WeatherManager.forecastWeather = weatherData.daily
-                } catch let error {
+        let url = "https://api.openweathermap.org/data/3.0/onecall?lat=\(lat)&lon=\(lon)&exclude=current,minutely,hourly,alerts&appid=\(API_KEY)&units=metric"
+        AF.request(url)
+            .validate()
+            .responseDecodable(of: ForecastWeatherData.self, queue: .main, decoder: JSONDecoder()) { response in
+                switch response.result {
+                case .success(let forecastData):
+                    WeatherManager.forecastWeather = forecastData.daily
+                case .failure(let error):
                     print(error.localizedDescription)
                 }
-            case .failure(let error):
-                print(error.localizedDescription)
             }
-        }
     }
     
     
-    // fetch by Location
+    //MARK: - Fetch weather by location
     func fetchWeather(lat: Double, lon: Double, completion: @escaping (Result<WeatherModel, Error>) -> Void) {
-        let path = "https://api.openweathermap.org/data/2.5/weather?appid=%@&units=metric&lat=%f&lon=%f"
-        let urlString = String(format: path, API_KEY, lat, lon)
-        handleRequest(urlString: urlString, completion: completion)
+        let url = "https://api.openweathermap.org/data/2.5/weather?appid=\(API_KEY)&units=metric&lat=\(lat)&lon=\(lon)"
+        handleRequest(urlString: url, completion: completion)
     }
     
-    // fetch by City
+    //MARK: - Fetch weather by city name
     func fetchWeather(byCity city: String, completion: @escaping (Result<WeatherModel, Error>) -> Void){
         let query = city.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? city
-        let path = "https://api.openweathermap.org/data/2.5/weather?q=%@&appid=%@&units=metric"
-        let urlString = String(format: path, query, API_KEY)
-        handleRequest(urlString: urlString, completion: completion)
+        let url = "https://api.openweathermap.org/data/2.5/weather?q=\(query)&appid=\(API_KEY)&units=metric"
+        handleRequest(urlString: url, completion: completion)
     }
     
     private func handleRequest(urlString: String, completion: @escaping (Result<WeatherModel, Error>) -> Void){
@@ -71,7 +62,7 @@ class WeatherManager {
         }
     }
     
-    // Custom error
+    //MARK: - Custom Error
     private func getWeatherError(error: AFError, data: Data?) -> Error? {
         if error.responseCode == 404,
             let data = data,
@@ -82,5 +73,4 @@ class WeatherManager {
             return nil
         }
     }
-    
 }

@@ -1,41 +1,39 @@
 //
-//  ForecastVC.swift
+//  DetailedForecastVC.swift
 //  Weather
 //
-//  Created by konstantine on 21.02.23.
+//  Created by Konstantine Tsirgvava on 21.02.23.
 //
 
 import UIKit
-import CoreMotion
-import SwiftyJSON
-import Loaf
-import CoreLocation
-import Alamofire
 
-class ForecastVC: UIViewController, UISheetPresentationControllerDelegate {
+class DetailedForecastVC: UIViewController, UISheetPresentationControllerDelegate {
     
-    // MARK: - Oulets
-    @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var cityLabel: UILabel!
-    @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var detailLabel: UILabel!
-  
-    
-    // MARK: - Variables & Constants
+    //MARK: - Variables & Constants
     let weatherManager = WeatherManager()
     let forecast = WeatherManager.forecastWeather
     override var sheetPresentationController: UISheetPresentationController?{
         presentationController as? UISheetPresentationController
     }
     
-    // MARK: - View Life Cycle
+    //MARK: - Oulets
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var cityLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var detailLabel: UILabel!
+    
+    //MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setDetailedForecast()
         fetchWeather()
         weatherManager.fetchForecast()
-        print("lat: \(ViewController.lat) lon: \(ViewController.lon)")
-     
+        print("lat: \(ViewController.lat), lon: \(ViewController.lon)")
+
+    }
+    
+    //MARK: - Methods
+    private func setDetailedForecast(){
         let blur = UIBlurEffect(style: .light)
         let blurView = UIVisualEffectView(effect: blur)
         view.backgroundColor = .clear
@@ -56,8 +54,8 @@ class ForecastVC: UIViewController, UISheetPresentationControllerDelegate {
     }
 }
 
-// Detail Information
-extension ForecastVC {
+//MARK: - Detail Information
+extension DetailedForecastVC {
     private func fetchWeather(){
         let city = ViewController.cityName
         weatherManager.fetchWeather(byCity: city) { [weak self](result) in
@@ -65,7 +63,6 @@ extension ForecastVC {
             this.handleResult(result)
         }
     }
-    //---------------------------------------------------------------------------------
 
     private func handleResult(_ result: Result<WeatherModel, Error>){
         switch result {
@@ -87,8 +84,8 @@ extension ForecastVC {
 }
 
 
-
-extension ForecastVC: UICollectionViewDelegate, UICollectionViewDataSource {
+//MARK: - Collection View
+extension DetailedForecastVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return forecast.count
     }

@@ -25,5 +25,4 @@ class ForecastCollectionViewCell: UICollectionViewCell {
         backgroundColor = UIColor(white: 1, alpha: 0.5)
         layer.cornerRadius = 20
     }
-
 }

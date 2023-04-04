@@ -13,7 +13,6 @@ struct WeatherData: Decodable {
     let main: Main
     let coord: Coord
     let wind: Wind
-    let clouds: Clouds
     let dt: Int
     var model: WeatherModel{
         return WeatherModel(lat: coord.lat,
@@ -27,16 +26,14 @@ struct WeatherData: Decodable {
                             conditionDescription: weather.first?.description ?? "",
                             feelsLike: main.feels_like,
                             humidity: main.humidity,
-                            windSpeed: wind.speed,
-                            clouds: clouds.all)
+                            windSpeed: wind.speed)
     }
 }
-// MARK: - Coordinates
+
 struct Coord: Decodable {
     let lat, lon: Double
 }
 
-// MARK: - Weather
 struct Weather: Decodable {
     let id: Int
     let main: String
@@ -62,7 +59,6 @@ struct Weather: Decodable {
     }
 }
 
-// MARK: - Temp
 struct Main: Decodable {
     let temp: Double
     let feels_like: Double
@@ -72,13 +68,6 @@ struct Main: Decodable {
 }
 
 
-// MARK: - Clouds
-struct Clouds: Decodable {
-    let all: Int
-}
-
-
-// MARK: - Wind
 struct Wind: Decodable {
     let speed: Double
 }
@@ -94,7 +83,6 @@ struct WeatherModel {
     let feelsLike: Double
     let humidity: Int
     let windSpeed: Double
-    let clouds: Int
     
     var conditionBackground: String{
         switch conditionId{
@@ -117,7 +105,7 @@ struct WeatherModel {
 }
 
 
-// MARK: - Forecast ---------------------------------------
+// MARK: - Daily Forecast --------------------------------------------------------
 struct ForecastWeatherData: Decodable {
     let daily: [Daily]
     

@@ -2,32 +2,22 @@
 //  ViewController.swift
 //  Weather
 //
-//  Created by konstantine on 11.02.23.
+//  Created by Konstantine Tsirgvava on 11.02.23.
 //
 
 import UIKit
-import Lottie
-import Loaf
 import CoreLocation
 import CoreMotion
+import Lottie
+import Loaf
 
 class ViewController: UIViewController, UITextFieldDelegate {
-
-    // MARK: - Outlets
     
-    @IBOutlet weak var searchBtnHorizontalConstraint: NSLayoutConstraint!
-    @IBOutlet weak var conditionBackground: UIImageView!
-    @IBOutlet weak var texFieldStroke: UIView!
-    @IBOutlet weak var textField: UITextField!
-    @IBOutlet weak var searchButton: UIButton!
-    @IBOutlet weak var cityLabel: UILabel!
-    @IBOutlet weak var temperatureLabel: UILabel!
-    @IBOutlet weak var conditionLabel: UILabel!
-    @IBOutlet weak var myView: UIView!
-    @IBOutlet weak var locationButton: UIButton!
-    
-    // MARK: - Constants & Variables
+    //MARK: - Constants & Variables
     let motionManager = CMMotionManager()
+    static var cityName = ""
+    static var lat: Double = 0
+    static var lon: Double = 0
     override var prefersStatusBarHidden: Bool { return true }
     private let weatherManager = WeatherManager()
     weak var delegate:  WeatherViewControllerDelegate?
@@ -36,24 +26,33 @@ class ViewController: UIViewController, UITextFieldDelegate {
         manager.delegate = self
         return manager
     }()
-    static var cityName = ""
-    static var lat: Double = 0
-    static var lon: Double = 0
+
+    //MARK: - Outlets
+    @IBOutlet weak var searchBtnHorizontalConstraint: NSLayoutConstraint!
+    @IBOutlet weak var conditionBackground: UIImageView!
+    @IBOutlet weak var texFieldStroke: UIView!
+    @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak var searchButton: UIButton!
+    @IBOutlet weak var cityLabel: UILabel!
+    @IBOutlet weak var temperatureLabel: UILabel!
+    @IBOutlet weak var conditionLabel: UILabel!
+    @IBOutlet weak var locationButton: UIButton!
+    @IBOutlet weak var animationView: LottieAnimationView!
     
-    // MARK: - View Life Cycle
+    //MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        lottieAnimation()
+        setupAnimation()
         setupGestures()
         texFieldStroke.isHidden = true
         textField.isHidden = true
+        self.textField.delegate = self
+        fetchWeather(byCity: "Tbilisi")
         DispatchQueue.main.async {
             ViewController.lat = self.locationManager.location?.coordinate.latitude ?? 0
             ViewController.lon = self.locationManager.location?.coordinate.longitude ?? 0
             self.weatherManager.fetchForecast()
         }
-        self.textField.delegate = self
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -61,9 +60,22 @@ class ViewController: UIViewController, UITextFieldDelegate {
         motionManager.stopAccelerometerUpdates()
     }
 
-    // MARK: - Actions
+    //MARK: - Actions
     @IBAction func locationButtonTapped(_ sender: UIButton) {
-        switch CLLocationManager.authorizationStatus(){
+        requestLocation()
+        locationAnimation()
+    }
+    @IBAction func searchBtnTapped(_ sender: UIButton) {
+        searchAction()
+    }
+    @IBAction func detailedForecastBtnTapped(_ sender: UIButton) {
+        presentDetailedForecast()
+    }
+    
+    //MARK: - Methods
+    private func requestLocation(){
+        let manager = CLLocationManager()
+        switch manager.authorizationStatus{
         case .authorizedAlways, .authorizedWhenInUse:
             locationManager.requestLocation()
         case .notDetermined:
@@ -74,40 +86,27 @@ class ViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    @IBAction func searchBtnTapped(_ sender: UIButton) {
-        searchAction()
-    }
-    
-    @IBAction func forecastView(_ sender: UIButton) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let forecastPresentationController = storyboard.instantiateViewController(withIdentifier: "ForecastVC") as! ForecastVC
-        self.present(forecastPresentationController, animated: true, completion: nil)
-    }
-    
-    // MARK: - Methods
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        self.view.endEditing(true)
-        searchAction()
-        return true
-    }
-    
-    func searchAction(){
+    private func searchAction(){
         if textField.isHidden == true {
             searchBarAnimation()
         } else {
             guard let query = textField.text, !query.isEmpty else {
                 Loaf("City cannot be empty. Please try again!", state: .error, location: .bottom, presentingDirection: .left, dismissingDirection: .right, sender: self).show()
                 texFieldStroke.shake()
-                return}
+                return }
             handleSearch(city: query)
             dismissSearchBar()
             textField.text = ""
         }
     }
-   
-    func searchBarAnimation(){
+    
+    private func presentDetailedForecast(){
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let forecastPresentationController = storyboard.instantiateViewController(withIdentifier: "detailedForecast") as! DetailedForecastVC
+        self.present(forecastPresentationController, animated: true, completion: nil)
+    }
+  
+    private func searchBarAnimation(){
         searchBtnHorizontalConstraint.constant = (textField.frame.maxX / 2) - 5
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
@@ -118,36 +117,36 @@ class ViewController: UIViewController, UITextFieldDelegate {
         textField.becomeFirstResponder()
     }
     
-    func lottieAnimation(){
-        let lottieLocationButton = LottieAnimationView(name: "locationMarker")
-        let birds = LottieAnimationView(name: "birds")
-        lottieLocationButton.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-        lottieLocationButton.center = CGPoint(x: 25, y: 25)
-        lottieLocationButton.contentMode = .scaleAspectFill
-        myView.addSubview(lottieLocationButton)
-        lottieLocationButton.play()
-        lottieLocationButton.loopMode = .playOnce
-        // CoreMotion
-        motionManager.deviceMotionUpdateInterval = 0.01
+    // Setup Lottie Animations --------------------------------------------------
+    private func setupAnimation(){
+        locationAnimation()
+        birdsAnimation()
+    }
+    
+    private func locationAnimation(){
+        animationView.contentMode = .scaleAspectFit
+        animationView.loopMode = .repeat(1.5)
+        animationView.play()
+        motionManager.deviceMotionUpdateInterval = 0.01        // CoreMotion
         motionManager.startDeviceMotionUpdates(to: .main) { (data, error) in
             guard let data = data, error == nil else { return }
-            
-            let rotation = atan2(data.gravity.x,
-                                 data.gravity.y) - .pi
-            lottieLocationButton.transform =
-            CGAffineTransform(rotationAngle: CGFloat(rotation))
+            let rotation = atan2(data.gravity.x, data.gravity.y) - .pi
+            self.animationView.transform = CGAffineTransform(rotationAngle: CGFloat(rotation))
         }
-        
-        birds.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 500)
-        birds.contentMode = .scaleAspectFit
-        conditionBackground.addSubview(birds)
-        birds.play()
-        birds.loopMode = .loop
-        
     }
+    
+    private func birdsAnimation(){
+        let birds = LottieAnimationView(name: "birds")
+        birds.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (view.frame.height) / 2)
+        birds.contentMode = .scaleAspectFit
+        birds.loopMode = .loop
+        birds.play()
+        conditionBackground.addSubview(birds)
+    }
+    // ---------------------------------------------------------------------------
 
     
-    // Fetching Weather by Location & City -------------------------------------------
+    // Fetching eather by location -----------------------------------------------
     private func fetchWeather(byLocation location: CLLocation){
         let lat = location.coordinate.latitude
         let lon = location.coordinate.longitude
@@ -156,14 +155,13 @@ class ViewController: UIViewController, UITextFieldDelegate {
             this.handleResult(result)
         }
     }
-    
+    // Fetching weather by city name ---------------------------------------------
     private func fetchWeather(byCity city: String){
         weatherManager.fetchWeather(byCity: city) { [weak self](result) in
             guard let this = self else {return}
             this.handleResult(result)
         }
     }
-    //---------------------------------------------------------------------------------
     
     private func handleResult(_ result: Result<WeatherModel, Error>){
         switch result {
@@ -202,15 +200,20 @@ class ViewController: UIViewController, UITextFieldDelegate {
         self.present(alert, animated: true)
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        self.view.endEditing(true)
+        searchAction()
+        return true
+    }
+    
 }
 
 
 
-    // MARK: - Extensions
-
-// Search----------------------------------------------------------------------------------------------
+//MARK: - Search
 extension ViewController {
-    func handleSearch(city: String){
+    private func handleSearch(city: String){
         view.endEditing(true)
         weatherManager.fetchWeather(byCity: city) { [weak self] (result) in
             guard let this = self else {return}
@@ -224,7 +227,7 @@ extension ViewController {
         }
     }
     
-    func handleSearchSuccess(model: WeatherModel){
+    private func handleSearchSuccess(model: WeatherModel){
         DispatchQueue.main.async{ [weak self] in
             self?.delegate?.didUpdateWeatherFromSearch(model: model)
             self?.updateView(with: model)
@@ -233,7 +236,7 @@ extension ViewController {
 }
 
 
-// Location ------------------------------------------------------------------------------------
+//MARK: - Location
 extension ViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last{
@@ -248,7 +251,7 @@ extension ViewController: CLLocationManagerDelegate {
 }
 
 
-// Gesture for dismiss SearchBar ----------------------------------------------------------------
+//MARK: - Gesture to dismiss SearchBar
 extension ViewController: UIGestureRecognizerDelegate {
     func setupGestures(){
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissSearchBar))
