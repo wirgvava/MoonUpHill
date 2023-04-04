@@ -36,6 +36,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         manager.delegate = self
         return manager
     }()
+    static var cityName = ""
     static var lat: Double = 0
     static var lon: Double = 0
     
@@ -119,6 +120,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     func lottieAnimation(){
         let lottieLocationButton = LottieAnimationView(name: "locationMarker")
+        let birds = LottieAnimationView(name: "birds")
         lottieLocationButton.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
         lottieLocationButton.center = CGPoint(x: 25, y: 25)
         lottieLocationButton.contentMode = .scaleAspectFill
@@ -135,6 +137,12 @@ class ViewController: UIViewController, UITextFieldDelegate {
             lottieLocationButton.transform =
             CGAffineTransform(rotationAngle: CGFloat(rotation))
         }
+        
+        birds.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 500)
+        birds.contentMode = .scaleAspectFit
+        conditionBackground.addSubview(birds)
+        birds.play()
+        birds.loopMode = .loop
         
     }
 
@@ -178,6 +186,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         DispatchQueue.main.async {
             ViewController.lat = model.lat
             ViewController.lon = model.lon
+            ViewController.cityName = model.cityName
         }
     }
     
@@ -210,6 +219,7 @@ extension ViewController {
                 this.handleSearchSuccess(model: model)
             case .failure(let error):
                 Loaf(error.localizedDescription, state: .error, location: .top, presentingDirection: .left, dismissingDirection: .right, sender: self!).show()
+                print("Error at SearchBar")
             }
         }
     }
