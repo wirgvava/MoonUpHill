@@ -27,7 +27,7 @@ class DetailedForecastVC: UIViewController, UISheetPresentationControllerDelegat
         super.viewDidLoad()
         setDetailedForecast()
         fetchWeather()
-        weatherManager.fetchForecast()
+//        weatherManager.fetchForecast()
         print("lat: \(ViewController.lat), lon: \(ViewController.lon)")
 
     }
