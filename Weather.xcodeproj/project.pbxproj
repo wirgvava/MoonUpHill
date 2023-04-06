@@ -67,6 +67,44 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A515D2CA29DEF37E007B4ACA /* API */ = {
+			isa = PBXGroup;
+			children = (
+				A5E8869A29A6565000217C1B /* Model */,
+				A5E8869B29A6566100217C1B /* Manager */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		A515D2CB29DEF3A5007B4ACA /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				A51FCCBC29A78F7300619400 /* Protocol */,
+				A5E886A029A662FE00217C1B /* Enums */,
+				A51FCCB929A78DA700619400 /* Extensions */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		A515D2CC29DEF3DB007B4ACA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A59AB90029A3E77E0029EA4E /* Animations */,
+				A54D09342996EFE0007CF531 /* Assets.xcassets */,
+				A54D09362996EFE0007CF531 /* LaunchScreen.storyboard */,
+				A54D09392996EFE0007CF531 /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		A515D2CD29DEF45A007B4ACA /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				A530AFB229AE7DC20052A1A2 /* ForecastCollectionViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		A51FCCB929A78DA700619400 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -104,44 +142,31 @@
 		A54D092A2996EFDF007CF531 /* Weather */ = {
 			isa = PBXGroup;
 			children = (
-				A54D093F2996F049007CF531 /* Assets */,
-				A59AB90029A3E77E0029EA4E /* Animations */,
-				A51FCCBC29A78F7300619400 /* Protocol */,
-				A5E886A029A662FE00217C1B /* Enums */,
-				A51FCCB929A78DA700619400 /* Extensions */,
-				A5E8869A29A6565000217C1B /* Model */,
-				A5E8869B29A6566100217C1B /* Manager */,
+				A515D2CA29DEF37E007B4ACA /* API */,
+				A54D09402996F055007CF531 /* Application */,
+				A515D2CB29DEF3A5007B4ACA /* Core */,
 				A54D09412996F066007CF531 /* Controllers */,
 				A54D09422996F073007CF531 /* Storyboards */,
-				A54D09402996F055007CF531 /* Supported Files */,
-				A54D09392996EFE0007CF531 /* Info.plist */,
+				A515D2CC29DEF3DB007B4ACA /* Resources */,
 			);
 			path = Weather;
 			sourceTree = "<group>";
 		};
-		A54D093F2996F049007CF531 /* Assets */ = {
-			isa = PBXGroup;
-			children = (
-				A54D09342996EFE0007CF531 /* Assets.xcassets */,
-			);
-			path = Assets;
-			sourceTree = "<group>";
-		};
-		A54D09402996F055007CF531 /* Supported Files */ = {
+		A54D09402996F055007CF531 /* Application */ = {
 			isa = PBXGroup;
 			children = (
 				A54D092B2996EFDF007CF531 /* AppDelegate.swift */,
 				A54D092D2996EFDF007CF531 /* SceneDelegate.swift */,
 			);
-			path = "Supported Files";
+			path = Application;
 			sourceTree = "<group>";
 		};
 		A54D09412996F066007CF531 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				A515D2CD29DEF45A007B4ACA /* Cell */,
 				A54D092F2996EFDF007CF531 /* ViewController.swift */,
 				A59AB90A29A41BD00029EA4E /* DetailedForecastVC.swift */,
-				A530AFB229AE7DC20052A1A2 /* ForecastCollectionViewCell.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -150,7 +175,6 @@
 			isa = PBXGroup;
 			children = (
 				A54D09312996EFDF007CF531 /* Main.storyboard */,
-				A54D09362996EFE0007CF531 /* LaunchScreen.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -433,7 +457,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = NW6K64987Z;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Weather/Info.plist;
+				INFOPLIST_FILE = Weather/Resources/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = MoonUpHill;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.weather";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Your location is required to show your local weather.";
@@ -470,7 +494,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = NW6K64987Z;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Weather/Info.plist;
+				INFOPLIST_FILE = Weather/Resources/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = MoonUpHill;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.weather";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Your location is required to show your local weather.";

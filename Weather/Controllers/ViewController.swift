@@ -273,4 +273,3 @@ extension ViewController: UIGestureRecognizerDelegate {
         return touch.view == self.view
     }
 }
-
