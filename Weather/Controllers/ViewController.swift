@@ -40,19 +40,21 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var animationView: LottieAnimationView!
     
     //MARK: - View Life Cycle
+    override func loadView() {
+        super.loadView()
+        cityLabel.text = UserDefaults.standard.string(forKey: "nameOfCity")
+        self.fetchWeather(byCity: UserDefaults.standard.string(forKey: "nameOfCity") ?? "Tbilisi")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupAnimation()
-        setupGestures()
+        ViewController.lat = self.locationManager.location?.coordinate.latitude ?? 0
+        ViewController.lon = self.locationManager.location?.coordinate.longitude ?? 0
         texFieldStroke.isHidden = true
         textField.isHidden = true
-        self.textField.delegate = self
-        self.fetchWeather(byCity: "Tbilisi")
-        DispatchQueue.main.async {
-            ViewController.lat = self.locationManager.location?.coordinate.latitude ?? 0
-            ViewController.lon = self.locationManager.location?.coordinate.longitude ?? 0
-//            self.weatherManager.fetchForecast()
-        }
+        textField.delegate = self
+        setupAnimation()
+        setupGestures()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -94,6 +96,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 Loaf("City cannot be empty. Please try again!", state: .error, location: .bottom, presentingDirection: .left, dismissingDirection: .right, sender: self).show()
                 texFieldStroke.shake()
                 return }
+            UserDefaults.standard.set(query, forKey: "nameOfCity")
             handleSearch(city: query)
             dismissSearchBar()
             textField.text = ""
@@ -151,8 +154,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
         let lat = location.coordinate.latitude
         let lon = location.coordinate.longitude
         weatherManager.fetchWeather(lat: lat, lon: lon) {[weak self] (result) in
-            guard let this = self else {return}
+            guard let this = self else { return }
             this.handleResult(result)
+            let city = this.cityLabel.text
+            UserDefaults.standard.set(city, forKey: "nameOfCity")
         }
     }
     // Fetching weather by city name ---------------------------------------------

@@ -26,9 +26,9 @@ class DetailedForecastVC: UIViewController, UISheetPresentationControllerDelegat
     //MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        performSelector(inBackground: #selector(fetchForecast), with: nil)
         setDetailedForecast()
         fetchWeather()
-        performSelector(inBackground: #selector(fetchForecast), with: nil)
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
         self.collectionView.reloadData()
