@@ -8,7 +8,7 @@
 import UIKit
 
 class ForecastCollectionViewCell: UICollectionViewCell {
-    
+        
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var conditionImage: UIImageView!
     @IBOutlet weak var tempLabel: UILabel!

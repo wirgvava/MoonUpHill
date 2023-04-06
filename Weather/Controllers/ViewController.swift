@@ -47,11 +47,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
         texFieldStroke.isHidden = true
         textField.isHidden = true
         self.textField.delegate = self
-        fetchWeather(byCity: "Tbilisi")
+        self.fetchWeather(byCity: "Tbilisi")
         DispatchQueue.main.async {
             ViewController.lat = self.locationManager.location?.coordinate.latitude ?? 0
             ViewController.lon = self.locationManager.location?.coordinate.longitude ?? 0
-            self.weatherManager.fetchForecast()
+//            self.weatherManager.fetchForecast()
         }
     }
     

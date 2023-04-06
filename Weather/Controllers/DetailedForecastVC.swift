@@ -6,12 +6,13 @@
 //
 
 import UIKit
+import Alamofire
 
 class DetailedForecastVC: UIViewController, UISheetPresentationControllerDelegate {
     
     //MARK: - Variables & Constants
     let weatherManager = WeatherManager()
-    let forecast = WeatherManager.forecastWeather
+    var forecast = [Daily]()
     override var sheetPresentationController: UISheetPresentationController?{
         presentationController as? UISheetPresentationController
     }
@@ -27,12 +28,32 @@ class DetailedForecastVC: UIViewController, UISheetPresentationControllerDelegat
         super.viewDidLoad()
         setDetailedForecast()
         fetchWeather()
-//        weatherManager.fetchForecast()
-        print("lat: \(ViewController.lat), lon: \(ViewController.lon)")
-
+        performSelector(inBackground: #selector(fetchForecast), with: nil)
+        self.collectionView.dataSource = self
+        self.collectionView.delegate = self
+        self.collectionView.reloadData()
     }
     
     //MARK: - Methods
+    @objc private func fetchForecast(){
+        let lat = ViewController.lat
+        let lon = ViewController.lat
+        let apiKey = "a1f8100b3fac9d0771123ea99dc27a04"
+        let url = "https://api.openweathermap.org/data/3.0/onecall?lat=\(lat)&lon=\(lon)&exclude=current,minutely,hourly,alerts&appid=\(apiKey)&units=metric"
+        AF.request(url)
+            .validate()
+            .responseDecodable(of: ForecastWeatherData.self, queue: .main, decoder: JSONDecoder()) { response in
+                switch response.result {
+                case .success(let forecastData):
+                    self.forecast = forecastData.daily
+                    self.collectionView.reloadData()
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+    }
+    
+    
     private func setDetailedForecast(){
         let blur = UIBlurEffect(style: .light)
         let blurView = UIVisualEffectView(effect: blur)
@@ -86,13 +107,13 @@ extension DetailedForecastVC {
 
 //MARK: - Collection View
 extension DetailedForecastVC: UICollectionViewDelegate, UICollectionViewDataSource {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return forecast.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! ForecastCollectionViewCell
-        
         let forecast = forecast[indexPath.row]
         cell.configure(with: forecast)
         return cell

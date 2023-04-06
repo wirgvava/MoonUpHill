@@ -10,26 +10,7 @@ import Alamofire
 
 class WeatherManager {
    
-    static var forecastWeather = [Daily]()
     private let API_KEY = "a1f8100b3fac9d0771123ea99dc27a04"
-    
-    //MARK: - Fetching OneCall API by Lat & Lon for daily forecast
-    func fetchForecast(){
-        let lat = ViewController.lat
-        let lon = ViewController.lat
-        let url = "https://api.openweathermap.org/data/3.0/onecall?lat=\(lat)&lon=\(lon)&exclude=current,minutely,hourly,alerts&appid=\(API_KEY)&units=metric"
-        AF.request(url)
-            .validate()
-            .responseDecodable(of: ForecastWeatherData.self, queue: .main, decoder: JSONDecoder()) { response in
-                switch response.result {
-                case .success(let forecastData):
-                    WeatherManager.forecastWeather = forecastData.daily
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            }
-    }
-    
     
     //MARK: - Fetch weather by location
     func fetchWeather(lat: Double, lon: Double, completion: @escaping (Result<WeatherModel, Error>) -> Void) {
