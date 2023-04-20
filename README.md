@@ -1,4 +1,4 @@
-# <img src="https://user-images.githubusercontent.com/43795921/233495109-2cea8072-e675-4ff4-a69f-684c7a91a047.png">  MoonUpHill
+# <img width="30" src="https://user-images.githubusercontent.com/43795921/233496888-416bbb58-9535-49c5-83d5-52a53c62e1cd.png">  MoonUpHill
 
 
 Simple Weather app
