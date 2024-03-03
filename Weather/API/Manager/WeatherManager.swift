@@ -10,7 +10,7 @@ import Alamofire
 
 class WeatherManager {
    
-    private let API_KEY = "a1f8100b3fac9d0771123ea99dc27a04"
+    private let API_KEY = Bundle.main.infoDictionary?["API_KEY"] as? String ?? ""
     
     //MARK: - Fetch weather by location
     func fetchWeather(lat: Double, lon: Double, completion: @escaping (Result<WeatherModel, Error>) -> Void) {
@@ -23,6 +23,21 @@ class WeatherManager {
         let query = city.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? city
         let url = "https://api.openweathermap.org/data/2.5/weather?q=\(query)&appid=\(API_KEY)&units=metric"
         handleRequest(urlString: url, completion: completion)
+    }
+    
+    //MARK: - Fetch forecast
+    func fetchForecast(lat: Double, lon: Double, completion: @escaping (Result<[Daily], Error>) -> ()){
+        let url = "https://api.openweathermap.org/data/3.0/onecall?lat=\(lat)&lon=\(lon)&exclude=current,minutely,hourly,alerts&appid=\(API_KEY)&units=metric"
+        AF.request(url).validate()
+            .responseDecodable(of: ForecastWeatherData.self, queue: .main, decoder: JSONDecoder()) { response in
+                switch response.result {
+                case .success(let forecastData):
+                    let daily = forecastData.daily
+                    completion(.success(daily))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
     }
     
     private func handleRequest(urlString: String, completion: @escaping (Result<WeatherModel, Error>) -> Void){

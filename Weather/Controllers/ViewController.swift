@@ -10,17 +10,16 @@ import CoreLocation
 import CoreMotion
 import Lottie
 import Loaf
+import WidgetKit
 
 class ViewController: UIViewController, UITextFieldDelegate {
     
     //MARK: - Constants & Variables
     let motionManager = CMMotionManager()
-    static var cityName = ""
-    static var lat: Double = 0
-    static var lon: Double = 0
+    static var forecast = [Daily]()
+    static var weatherModel: WeatherModel?
     override var prefersStatusBarHidden: Bool { return true }
     private let weatherManager = WeatherManager()
-    weak var delegate:  WeatherViewControllerDelegate?
     private lazy var locationManager: CLLocationManager = {
         let manager = CLLocationManager()
         manager.delegate = self
@@ -44,17 +43,17 @@ class ViewController: UIViewController, UITextFieldDelegate {
         super.loadView()
         cityLabel.text = UserDefaults.standard.string(forKey: "nameOfCity")
         self.fetchWeather(byCity: UserDefaults.standard.string(forKey: "nameOfCity") ?? "Tbilisi")
+        self.cacheForecast()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        ViewController.lat = self.locationManager.location?.coordinate.latitude ?? 0
-        ViewController.lon = self.locationManager.location?.coordinate.longitude ?? 0
         texFieldStroke.isHidden = true
         textField.isHidden = true
         textField.delegate = self
         setupAnimation()
         setupGestures()
+        locationManager.requestWhenInUseAuthorization()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -67,9 +66,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
         requestLocation()
         locationAnimation()
     }
+    
     @IBAction func searchBtnTapped(_ sender: UIButton) {
         searchAction()
     }
+    
     @IBAction func detailedForecastBtnTapped(_ sender: UIButton) {
         presentDetailedForecast()
     }
@@ -146,10 +147,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
         birds.play()
         conditionBackground.addSubview(birds)
     }
-    // ---------------------------------------------------------------------------
 
-    
-    // Fetching eather by location -----------------------------------------------
+    // Fetching weather by location -----------------------------------------------
     private func fetchWeather(byLocation location: CLLocation){
         let lat = location.coordinate.latitude
         let lon = location.coordinate.longitude
@@ -158,6 +157,24 @@ class ViewController: UIViewController, UITextFieldDelegate {
             this.handleResult(result)
             let city = this.cityLabel.text
             UserDefaults.standard.set(city, forKey: "nameOfCity")
+        }
+    }
+    
+    private func fetchForecast(lat: Double, lng: Double){
+        weatherManager.fetchForecast(lat: lat, lon: lng) { [weak self] (result) in
+            guard let this = self else { return }
+            switch result {
+            case .success(let daily):
+                ViewController.forecast = daily
+
+                guard let appGroups = Bundle.main.infoDictionary?["APP_GROUP"] as? String else { return }
+                if let defaults = UserDefaults(suiteName: appGroups) {
+                    defaults.set(daily.first?.weather.first?.conditionImage, forKey: "widgetCondition")
+                    defaults.synchronize()
+                }
+            case .failure(let error):
+                Loaf(error.localizedDescription, sender: this).show()
+            }
         }
     }
     // Fetching weather by city name ---------------------------------------------
@@ -182,14 +199,31 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     
     private func updateView(with model: WeatherModel){
+        ViewController.weatherModel = model
         temperatureLabel.text = model.temp.toString().appending("°C")
         conditionLabel.text = model.conditionDescription
         conditionBackground.image = UIImage(named: model.conditionBackground)
         cityLabel.text = model.cityName
-        DispatchQueue.main.async {
-            ViewController.lat = model.lat
-            ViewController.lon = model.lon
-            ViewController.cityName = model.cityName
+        
+        // Save weather data in the main app
+        guard let appGroups = Bundle.main.infoDictionary?["APP_GROUP"] as? String else { return }
+        if let defaults = UserDefaults(suiteName: appGroups) {
+            defaults.set(model.cityName, forKey: "widgetCity")
+            defaults.set(model.temp, forKey: "widgetTemp")
+            defaults.set(model.conditionBackground, forKey: "widgetBG")
+            // Save other weather data as needed
+            defaults.synchronize()
+        }
+        
+        WidgetCenter.shared.reloadTimelines(ofKind: "WeatherWidget")
+    }
+    
+    private func cacheForecast(){
+        if UserDefaults.standard.double(forKey: "lat") != 0.0 &&
+            UserDefaults.standard.double(forKey: "lng") != 0.0 {
+            let lat = UserDefaults.standard.double(forKey: "lat")
+            let lng = UserDefaults.standard.double(forKey: "lng")
+            fetchForecast(lat: lat, lng: lng)
         }
     }
     
@@ -211,10 +245,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         searchAction()
         return true
     }
-    
 }
-
-
 
 //MARK: - Search
 extension ViewController {
@@ -224,37 +255,58 @@ extension ViewController {
             guard let this = self else {return}
             switch result{
             case .success(let model):
-                this.handleSearchSuccess(model: model)
+                this.updateView(with: model)
+                this.handleFromSearch(with: city)
             case .failure(let error):
                 Loaf(error.localizedDescription, state: .error, location: .top, presentingDirection: .left, dismissingDirection: .right, sender: self!).show()
-                print("Error at SearchBar")
             }
-        }
-    }
-    
-    private func handleSearchSuccess(model: WeatherModel){
-        DispatchQueue.main.async{ [weak self] in
-            self?.delegate?.didUpdateWeatherFromSearch(model: model)
-            self?.updateView(with: model)
         }
     }
 }
 
-
 //MARK: - Location
 extension ViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        switch status {
+        case .authorizedAlways, .authorizedWhenInUse:
+            locationManager.startUpdatingLocation()
+        case .restricted, .denied, .notDetermined:
+            locationManager.stopUpdatingLocation()
+        @unknown default:
+            break
+        }
+    }
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last{
             manager.stopUpdatingLocation()
+            let lat = location.coordinate.latitude
+            let lng = location.coordinate.longitude
+            UserDefaults.standard.set(lat, forKey: "lat")
+            UserDefaults.standard.set(lng, forKey: "lng")
+            
             fetchWeather(byLocation: location)
+            fetchForecast(lat: lat, lng: lng)
         }
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         handleError()
     }
+    
+    func handleFromSearch(with city: String){
+        let geoCoder = CLGeocoder()
+        geoCoder.geocodeAddressString(city) { (placemarks, error) in
+            guard let placemarks = placemarks,
+                  let placemark = placemarks.first,
+                  let location = placemark.location else { return }
+            
+            let lat = location.coordinate.latitude
+            let lng = location.coordinate.longitude
+            self.fetchForecast(lat: lat, lng: lng)
+        }
+    }
 }
-
 
 //MARK: - Gesture to dismiss SearchBar
 extension ViewController: UIGestureRecognizerDelegate {

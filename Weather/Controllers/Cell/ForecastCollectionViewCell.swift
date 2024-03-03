@@ -14,8 +14,15 @@ class ForecastCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var tempLabel: UILabel!
     @IBOutlet weak var conditionLabel: UILabel!
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    var selectedColor = CGColor(gray: 1, alpha: 1)
+    
+    override var isSelected: Bool {
+        didSet {
+            contentView.layer.masksToBounds = true
+            contentView.layer.cornerRadius = 20
+            contentView.layer.borderColor = selectedColor
+            contentView.layer.borderWidth = isSelected ? 3 : 0
+        }
     }
     
     func configure(with weather: Daily) {

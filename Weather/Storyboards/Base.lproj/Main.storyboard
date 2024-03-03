@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -201,36 +201,41 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tCQ-tC-Irc">
-                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                                <rect key="frame" x="0.0" y="59" width="393" height="793"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="adv-b9-eNm">
-                                        <rect key="frame" x="0.0" y="0.0" width="393" height="850"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="651.33333333333337"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8 Days Forecast" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XY1-J0-ONq">
-                                                <rect key="frame" x="135.66666666666666" y="20" width="121.99999999999997" height="25"/>
+                                                <rect key="frame" x="136" y="20" width="121.33333333333331" height="23.333333333333329"/>
+                                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
+                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Data" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oay-Ql-yC3">
+                                                <rect key="frame" x="0.0" y="12" width="393" height="300"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="25" id="VeA-pF-cHr"/>
+                                                    <constraint firstAttribute="height" constant="300" id="ZnO-75-zSr"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="m20-sk-eoh">
-                                                <rect key="frame" x="10" y="37" width="373" height="300"/>
+                                                <rect key="frame" x="0.0" y="35.333333333333314" width="393" height="300"/>
                                                 <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="300" id="bd1-jN-2F7"/>
-                                                    <constraint firstAttribute="height" constant="300" id="pXc-T7-wEo"/>
+                                                    <constraint firstAttribute="height" constant="300" id="bd1-jN-2F7"/>
                                                 </constraints>
-                                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="HuH-KL-KVv">
+                                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="15" minimumInteritemSpacing="0.0" id="HuH-KL-KVv">
                                                     <size key="itemSize" width="130" height="250"/>
                                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                    <inset key="sectionInset" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
                                                 </collectionViewFlowLayout>
                                                 <cells>
                                                     <collectionViewCell clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="927-8W-1Br" customClass="ForecastCollectionViewCell" customModule="Weather" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="3.6666666666666665" width="120" height="293"/>
+                                                        <rect key="frame" x="20" y="3.6666666666666665" width="120" height="293"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="M5P-Nb-ANK">
                                                             <rect key="frame" x="0.0" y="0.0" width="120" height="293"/>
@@ -249,7 +254,7 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cloudy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tqw-Cz-gRN">
-                                                                    <rect key="frame" x="30" y="223.66666666666666" width="60" height="24.666666666666657"/>
+                                                                    <rect key="frame" x="30.333333333333332" y="223.66666666666666" width="59.666666666666671" height="24.666666666666657"/>
                                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="18"/>
                                                                     <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
@@ -291,29 +296,25 @@
                                                     <outlet property="prefetchDataSource" destination="gKJ-Tj-Rhr" id="fHI-3T-RUO"/>
                                                 </connections>
                                             </collectionView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tbilisi" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8cZ-RF-bDZ">
-                                                <rect key="frame" x="35" y="417" width="98" height="50"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="50" id="1Gu-cr-IAp"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="36"/>
-                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Apr 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6H2-8A-bIj">
-                                                <rect key="frame" x="153" y="417" width="93" height="50"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="50" id="NYm-Dk-q8G"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="36"/>
-                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
+                                            <stackView opaque="NO" contentMode="left" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="cX9-HZ-d0Y">
+                                                <rect key="frame" x="35.000000000000014" y="385.33333333333331" width="200.33333333333337" height="49.333333333333314"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tbilisi" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8cZ-RF-bDZ">
+                                                        <rect key="frame" x="0.0" y="0.0" width="98" height="49.333333333333336"/>
+                                                        <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="36"/>
+                                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Apr 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6H2-8A-bIj">
+                                                        <rect key="frame" x="108" y="0.0" width="92.333333333333314" height="49.333333333333336"/>
+                                                        <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="36"/>
+                                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0nt-Eg-qtW">
-                                                <rect key="frame" x="35" y="497" width="198" height="137"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="137" id="FV2-H4-9Ip"/>
-                                                </constraints>
+                                                <rect key="frame" x="35" y="464.66666666666669" width="338" height="136.66666666666669"/>
                                                 <string key="text">Feels like: 23 C
 The high will be: 25 C
 The low will be: 20 C
@@ -323,39 +324,27 @@ Humidity: 65 %</string>
                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dOR-Da-7RP">
-                                                <rect key="frame" x="106.66666666666669" y="746" width="180" height="74"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="74" id="4mD-s6-WGJ"/>
-                                                </constraints>
-                                                <string key="text">This application was created
-by Konstantine Tsirgvava.
-All rights reserved ©</string>
-                                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
-                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
                                         </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="dOR-Da-7RP" secondAttribute="bottom" constant="30" id="5Ud-mx-yl9"/>
-                                            <constraint firstItem="6H2-8A-bIj" firstAttribute="leading" secondItem="8cZ-RF-bDZ" secondAttribute="trailing" constant="20" id="7x5-we-EXT"/>
-                                            <constraint firstItem="m20-sk-eoh" firstAttribute="leading" secondItem="adv-b9-eNm" secondAttribute="leading" constant="10" id="F6k-oI-SBs"/>
-                                            <constraint firstItem="6H2-8A-bIj" firstAttribute="centerY" secondItem="8cZ-RF-bDZ" secondAttribute="centerY" id="FLb-pQ-8w6"/>
+                                            <constraint firstAttribute="bottom" secondItem="0nt-Eg-qtW" secondAttribute="bottom" constant="50" id="7rr-ed-JV6"/>
+                                            <constraint firstAttribute="trailing" secondItem="oay-Ql-yC3" secondAttribute="trailing" id="88N-LH-l59"/>
+                                            <constraint firstItem="oay-Ql-yC3" firstAttribute="leading" secondItem="adv-b9-eNm" secondAttribute="leading" id="9Ee-lB-jkU"/>
+                                            <constraint firstItem="m20-sk-eoh" firstAttribute="leading" secondItem="adv-b9-eNm" secondAttribute="leading" id="F6k-oI-SBs"/>
                                             <constraint firstItem="0nt-Eg-qtW" firstAttribute="leading" secondItem="adv-b9-eNm" secondAttribute="leading" constant="35" id="GOE-KE-55b"/>
-                                            <constraint firstAttribute="trailing" secondItem="m20-sk-eoh" secondAttribute="trailing" constant="10" id="Izy-Gd-3PB"/>
+                                            <constraint firstAttribute="trailing" secondItem="m20-sk-eoh" secondAttribute="trailing" id="Izy-Gd-3PB"/>
                                             <constraint firstItem="m20-sk-eoh" firstAttribute="top" secondItem="XY1-J0-ONq" secondAttribute="bottom" constant="-8" id="KdJ-ps-G9P"/>
                                             <constraint firstItem="XY1-J0-ONq" firstAttribute="top" secondItem="adv-b9-eNm" secondAttribute="top" constant="20" id="P1T-x9-lpT"/>
-                                            <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="6H2-8A-bIj" secondAttribute="trailing" constant="147" id="SqK-EM-OtN"/>
-                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="0nt-Eg-qtW" secondAttribute="trailing" constant="20" symbolic="YES" id="TEN-ny-WgI"/>
-                                            <constraint firstItem="dOR-Da-7RP" firstAttribute="centerX" secondItem="adv-b9-eNm" secondAttribute="centerX" id="Y6a-ls-rNU"/>
-                                            <constraint firstItem="8cZ-RF-bDZ" firstAttribute="leading" secondItem="adv-b9-eNm" secondAttribute="leading" constant="35" id="f85-Et-lig"/>
-                                            <constraint firstItem="8cZ-RF-bDZ" firstAttribute="top" secondItem="m20-sk-eoh" secondAttribute="bottom" constant="80" id="kIG-kO-pif"/>
-                                            <constraint firstItem="0nt-Eg-qtW" firstAttribute="top" secondItem="8cZ-RF-bDZ" secondAttribute="bottom" constant="30" id="ocF-zv-AiK"/>
-                                            <constraint firstAttribute="height" constant="850" id="olp-MQ-lrY"/>
+                                            <constraint firstAttribute="trailing" secondItem="0nt-Eg-qtW" secondAttribute="trailing" constant="20" symbolic="YES" id="TEN-ny-WgI"/>
+                                            <constraint firstItem="cX9-HZ-d0Y" firstAttribute="leading" secondItem="adv-b9-eNm" secondAttribute="leading" constant="35" id="Vtf-xP-ZOc"/>
+                                            <constraint firstItem="oay-Ql-yC3" firstAttribute="top" secondItem="XY1-J0-ONq" secondAttribute="top" constant="-8" id="jDq-ss-n4R"/>
+                                            <constraint firstItem="cX9-HZ-d0Y" firstAttribute="top" secondItem="m20-sk-eoh" secondAttribute="bottom" constant="50" id="rqZ-bd-SVV"/>
                                             <constraint firstItem="XY1-J0-ONq" firstAttribute="centerX" secondItem="adv-b9-eNm" secondAttribute="centerX" id="sBf-ML-apq"/>
+                                            <constraint firstItem="0nt-Eg-qtW" firstAttribute="top" secondItem="cX9-HZ-d0Y" secondAttribute="bottom" constant="30" id="sRc-Qf-Zhh"/>
                                         </constraints>
                                     </view>
                                 </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="adv-b9-eNm" firstAttribute="top" secondItem="tCQ-tC-Irc" secondAttribute="top" id="BMd-UJ-iCx"/>
                                     <constraint firstItem="adv-b9-eNm" firstAttribute="leading" secondItem="tCQ-tC-Irc" secondAttribute="leading" id="Wb4-FC-sdq"/>
@@ -365,10 +354,10 @@ All rights reserved ©</string>
                             </scrollView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ME0-kN-HAK"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="tCQ-tC-Irc" firstAttribute="trailing" secondItem="ME0-kN-HAK" secondAttribute="trailing" id="5gf-es-a1q"/>
-                            <constraint firstItem="tCQ-tC-Irc" firstAttribute="bottom" secondItem="ME0-kN-HAK" secondAttribute="bottom" id="HkI-k1-z9Z"/>
+                            <constraint firstItem="tCQ-tC-Irc" firstAttribute="bottom" secondItem="xx2-tT-cI4" secondAttribute="bottom" id="HkI-k1-z9Z"/>
                             <constraint firstItem="tCQ-tC-Irc" firstAttribute="leading" secondItem="ME0-kN-HAK" secondAttribute="leading" id="MDP-gR-rUh"/>
                             <constraint firstItem="adv-b9-eNm" firstAttribute="width" secondItem="xx2-tT-cI4" secondAttribute="width" id="N8L-4C-IS3"/>
                             <constraint firstItem="tCQ-tC-Irc" firstAttribute="top" secondItem="ME0-kN-HAK" secondAttribute="top" id="QX4-rZ-ql7"/>
@@ -379,6 +368,7 @@ All rights reserved ©</string>
                         <outlet property="collectionView" destination="m20-sk-eoh" id="vQz-bu-dNb"/>
                         <outlet property="dateLabel" destination="6H2-8A-bIj" id="SGi-Ex-CsH"/>
                         <outlet property="detailLabel" destination="0nt-Eg-qtW" id="r8r-45-NZd"/>
+                        <outlet property="noData" destination="oay-Ql-yC3" id="Ehb-gF-zWe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AYJ-Mn-C6F" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -389,7 +379,7 @@ All rights reserved ©</string>
     <resources>
         <image name="Sunny" width="1080" height="1920"/>
         <image name="imSnow" width="512" height="512"/>
-        <image name="magnifyingglass" catalog="system" width="128" height="117"/>
+        <image name="magnifyingglass" catalog="system" width="32" height="32"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

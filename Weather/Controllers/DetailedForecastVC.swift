@@ -6,54 +6,32 @@
 //
 
 import UIKit
-import Alamofire
 
 class DetailedForecastVC: UIViewController, UISheetPresentationControllerDelegate {
     
-    //MARK: - Variables & Constants
-    let weatherManager = WeatherManager()
-    var forecast = [Daily]()
     override var sheetPresentationController: UISheetPresentationController?{
         presentationController as? UISheetPresentationController
     }
     
-    //MARK: - Oulets
+    //MARK: - IBOulets
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var detailLabel: UILabel!
+    @IBOutlet weak var noData: UILabel!
     
     //MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        performSelector(inBackground: #selector(fetchForecast), with: nil)
         setDetailedForecast()
-        fetchWeather()
+        updateView(with: ViewController.weatherModel!)
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
         self.collectionView.reloadData()
+        UserDefaults.standard.set(true, forKey: "firstSelected")
     }
     
     //MARK: - Methods
-    @objc private func fetchForecast(){
-        let lat = ViewController.lat
-        let lon = ViewController.lat
-        let apiKey = "a1f8100b3fac9d0771123ea99dc27a04"
-        let url = "https://api.openweathermap.org/data/3.0/onecall?lat=\(lat)&lon=\(lon)&exclude=current,minutely,hourly,alerts&appid=\(apiKey)&units=metric"
-        AF.request(url)
-            .validate()
-            .responseDecodable(of: ForecastWeatherData.self, queue: .main, decoder: JSONDecoder()) { response in
-                switch response.result {
-                case .success(let forecastData):
-                    self.forecast = forecastData.daily
-                    self.collectionView.reloadData()
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            }
-    }
-    
-    
     private func setDetailedForecast(){
         let blur = UIBlurEffect(style: .light)
         let blurView = UIVisualEffectView(effect: blur)
@@ -61,10 +39,16 @@ class DetailedForecastVC: UIViewController, UISheetPresentationControllerDelegat
         blurView.frame = view.bounds
         view.addSubview(blurView)
         view.sendSubviewToBack(blurView)
+        
+        let smallId = UISheetPresentationController.Detent.Identifier("small")
+        let smallDetent = UISheetPresentationController.Detent.custom(identifier: smallId) { context in
+            return 330
+        }
+        noData.layer.isHidden = ViewController.forecast.count == 0 ? false : true
+
         sheetPresentationController?.delegate = self
         sheetPresentationController?.prefersGrabberVisible = true
-        sheetPresentationController?.selectedDetentIdentifier = .medium
-        sheetPresentationController?.detents = [.medium(), .large()]
+        sheetPresentationController?.detents = [smallDetent,.medium(), .large()]
         sheetPresentationController?.preferredCornerRadius = 22
         // collectionView Shadow
         collectionView.layer.shadowColor = CGColor(red: 0, green: 0, blue: 0, alpha: 1)
@@ -77,23 +61,6 @@ class DetailedForecastVC: UIViewController, UISheetPresentationControllerDelegat
 
 //MARK: - Detail Information
 extension DetailedForecastVC {
-    private func fetchWeather(){
-        let city = ViewController.cityName
-        weatherManager.fetchWeather(byCity: city) { [weak self](result) in
-            guard let this = self else {return}
-            this.handleResult(result)
-        }
-    }
-
-    private func handleResult(_ result: Result<WeatherModel, Error>){
-        switch result {
-        case .success(let model):
-            updateView(with: model)
-        case .failure:
-            print("Error at Detail Information")
-        }
-    }
-
     private func updateView(with model: WeatherModel){
         let date = Date(timeIntervalSince1970: TimeInterval(model.dt))
         let dateFormatter = DateFormatter()
@@ -101,30 +68,33 @@ extension DetailedForecastVC {
         cityLabel.text = "\(model.cityName)"
         dateLabel.text = "\(dateFormatter.string(from: date))"
         detailLabel.text = "Feels like : \(model.feelsLike.toString()) °C \nThe high will be : \(model.temp_max.toString()) °C \nThe low will be : \(model.temp_min.toString()) °C \nHumidity : \(model.humidity.toString()) % \nWind speed: \(model.windSpeed.toString()) m/s"
+        collectionView.reloadData()
     }
 }
 
-
 //MARK: - Collection View
 extension DetailedForecastVC: UICollectionViewDelegate, UICollectionViewDataSource {
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return forecast.count
+        return ViewController.forecast.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! ForecastCollectionViewCell
-        let forecast = forecast[indexPath.row]
+        let forecast = ViewController.forecast[indexPath.row]
+        if UserDefaults.standard.bool(forKey: "firstSelected") {
+            collectionView.selectItem(at: [0,0], animated: true, scrollPosition: .top)
+        }
         cell.configure(with: forecast)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let forecastData = forecast[indexPath.row]
+        let forecastData = ViewController.forecast[indexPath.row]
         let date = Date(timeIntervalSince1970: TimeInterval(forecastData.dt))
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMM d"
         dateLabel.text = "\(dateFormatter.string(from: date))"
         detailLabel.text = "Feels like : \(forecastData.feels_like.day.toString()) °C \nThe high will be : \(forecastData.temp.max.toString()) °C \nThe low will be : \(forecastData.temp.min.toString()) °C \nHumidity : \(forecastData.humidity.toString()) % \nWind speed: \(forecastData.wind_speed.toString()) m/s"
+        UserDefaults.standard.set(false, forKey: "firstSelected")
     }
 }
