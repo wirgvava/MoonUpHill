@@ -118,3 +118,8 @@ fastlane/test_output
 iOSInjectionProject/
 
 # End of https://www.toptal.com/developers/gitignore/api/swift,macos
+
+Weather.entitlements
+WeatherWidgetExtension.entitlements
+Release.xcconfig
+Info.plist
