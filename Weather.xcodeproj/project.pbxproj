@@ -24,6 +24,8 @@
 		A54D09352996EFE0007CF531 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A54D09342996EFE0007CF531 /* Assets.xcassets */; };
 		A54D09382996EFE0007CF531 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A54D09362996EFE0007CF531 /* LaunchScreen.storyboard */; };
 		A55A939E2997D2580004532B /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = A55A939D2997D2580004532B /* Alamofire */; };
+		A58E40142B964DE100B96F21 /* rain.json in Resources */ = {isa = PBXBuildFile; fileRef = A58E40132B964DE100B96F21 /* rain.json */; };
+		A58E40262B96573500B96F21 /* snow.json in Resources */ = {isa = PBXBuildFile; fileRef = A58E40252B96573500B96F21 /* snow.json */; };
 		A59AB90B29A41BD00029EA4E /* DetailedForecastVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59AB90A29A41BD00029EA4E /* DetailedForecastVC.swift */; };
 		A5BE3E5B29AA6727001711DD /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BE3E5A29AA6727001711DD /* View+Extension.swift */; };
 		A5C24B292B94CE1800CE62B1 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = A5C24B282B94CE1800CE62B1 /* Lottie */; };
@@ -82,6 +84,8 @@
 		A54D09342996EFE0007CF531 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A54D09372996EFE0007CF531 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A54D09392996EFE0007CF531 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A58E40132B964DE100B96F21 /* rain.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = rain.json; sourceTree = "<group>"; };
+		A58E40252B96573500B96F21 /* snow.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = snow.json; sourceTree = "<group>"; };
 		A59AB90A29A41BD00029EA4E /* DetailedForecastVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedForecastVC.swift; sourceTree = "<group>"; };
 		A5BE3E5A29AA6727001711DD /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
 		A5C24B2A2B94CFD000CE62B1 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
@@ -231,9 +235,8 @@
 		A54D09412996F066007CF531 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				A515D2CD29DEF45A007B4ACA /* Cell */,
-				A54D092F2996EFDF007CF531 /* ViewController.swift */,
-				A59AB90A29A41BD00029EA4E /* DetailedForecastVC.swift */,
+				A59B7F1A2B97129B00CD8FAD /* Main */,
+				A59B7F1B2B9712AD00CD8FAD /* DetailedForecast */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -251,8 +254,27 @@
 			children = (
 				A517428A29DCCFB400DF67A1 /* LocationMarker.json */,
 				A533D15929DB02A800B9DBA3 /* birds.json */,
+				A58E40252B96573500B96F21 /* snow.json */,
+				A58E40132B964DE100B96F21 /* rain.json */,
 			);
 			path = Animations;
+			sourceTree = "<group>";
+		};
+		A59B7F1A2B97129B00CD8FAD /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				A54D092F2996EFDF007CF531 /* ViewController.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		A59B7F1B2B9712AD00CD8FAD /* DetailedForecast */ = {
+			isa = PBXGroup;
+			children = (
+				A515D2CD29DEF45A007B4ACA /* Cell */,
+				A59AB90A29A41BD00029EA4E /* DetailedForecastVC.swift */,
+			);
+			path = DetailedForecast;
 			sourceTree = "<group>";
 		};
 		A5E8869A29A6565000217C1B /* Model */ = {
@@ -381,7 +403,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A58E40262B96573500B96F21 /* snow.json in Resources */,
 				A54D09382996EFE0007CF531 /* LaunchScreen.storyboard in Resources */,
+				A58E40142B964DE100B96F21 /* rain.json in Resources */,
 				A517428B29DCCFB400DF67A1 /* LocationMarker.json in Resources */,
 				A5C24B2B2B94CFD000CE62B1 /* Release.xcconfig in Resources */,
 				A54D09352996EFE0007CF531 /* Assets.xcassets in Resources */,

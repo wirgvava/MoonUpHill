@@ -19,14 +19,22 @@ struct Provider: TimelineProvider {
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
+        let currentDate = Date()
+        let calendar = Calendar.current
         var entries: [SimpleEntry] = []
+        
+        var isNight = false
+        
+        if let currentHour = calendar.dateComponents([.hour], from: currentDate).hour {
+            isNight = currentHour > 21 ? true : false
+        }
 
         guard let appGroups = Bundle.main.infoDictionary?["APP_GROUP"] as? String else { return }
         guard let defaults = UserDefaults(suiteName: appGroups) else { return }
         let city = defaults.string(forKey: "widgetCity") ?? "Tbilisi"
         let temperature = defaults.integer(forKey: "widgetTemp")
-        let bg = defaults.string(forKey: "widgetBG") ?? "Sunny"
         let conditionImage = defaults.string(forKey: "widgetCondition") ?? ""
+        let bg = isNight ? "night" : defaults.string(forKey: "widgetBG") ?? "Sunny"
         
         let entry = SimpleEntry(date: .now, city: city, bg: bg, conditionImage: conditionImage,temperature: temperature)
         entries.append(entry)
@@ -57,7 +65,7 @@ struct WeatherWidgetEntryView : View {
             VStack(alignment: .center, spacing: 0.0) {
                 Text(entry.city)
                     .font(.custom("Avenir Next", size: 28))
-                    .fontWeight(.regular)
+                    .fontWeight(.medium)
                     .foregroundColorBy(entry: entry)
                 
                 HStack{
@@ -98,7 +106,7 @@ struct WeatherWidget: Widget {
 
 extension Text {
     func foregroundColorBy(entry: Provider.Entry) -> Text {
-        if entry.bg == "Thunder" {
+        if entry.bg == "Thunder" || entry.bg == "night" {
             return self.foregroundColor(.white)
         } else {
             return self.foregroundColor(.black)
@@ -111,7 +119,7 @@ extension Text {
 } timeline: {
     SimpleEntry(date: .now, city: "London", bg: "Sunny", conditionImage: "imClear", temperature: 25)
     SimpleEntry(date: .now, city: "London", bg: "Rainy", conditionImage: "imRain", temperature: 19)
-    SimpleEntry(date: .now, city: "London", bg: "Rainy", conditionImage: "imCloud", temperature: 20)
+    SimpleEntry(date: .now, city: "London", bg: "night", conditionImage: "imCloud", temperature: 20)
     SimpleEntry(date: .now, city: "London", bg: "Snowy", conditionImage: "imSnow", temperature: -2)
     SimpleEntry(date: .now, city: "London", bg: "Thunder", conditionImage: "imThunder", temperature: 6)
 }

@@ -15,6 +15,8 @@ import WidgetKit
 class ViewController: UIViewController, UITextFieldDelegate {
     
     //MARK: - Constants & Variables
+    let currentDate = Date()
+    let calendar = Calendar.current
     let motionManager = CMMotionManager()
     static var forecast = [Daily]()
     static var weatherModel: WeatherModel?
@@ -202,9 +204,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
         ViewController.weatherModel = model
         temperatureLabel.text = model.temp.toString().appending("°C")
         conditionLabel.text = model.conditionDescription
-        conditionBackground.image = UIImage(named: model.conditionBackground)
         cityLabel.text = model.cityName
-        
+        checkNightCondition(with: model)
+      
         // Save weather data in the main app
         guard let appGroups = Bundle.main.infoDictionary?["APP_GROUP"] as? String else { return }
         if let defaults = UserDefaults(suiteName: appGroups) {
@@ -216,6 +218,35 @@ class ViewController: UIViewController, UITextFieldDelegate {
         }
         
         WidgetCenter.shared.reloadTimelines(ofKind: "WeatherWidget")
+    }
+    
+    private func checkNightCondition(with model: WeatherModel){
+        var isNight = false
+        if let currentHour = calendar.dateComponents([.hour], from: currentDate).hour {
+            isNight = currentHour > 20 || currentHour < 5 ? true : false
+        }
+        
+        var conditionBG: UIImage = isNight ? UIImage(named: "night")! : UIImage(named: model.conditionBackground)!
+        conditionBackground.image = conditionBG
+       
+        switch model.conditionId {
+        case 200...599:
+            nightConditionAnimation(isNight: isNight, name: "rain")
+        case 600...699:
+            nightConditionAnimation(isNight: isNight, name: "snow")
+        default:
+            return
+        }
+    }
+    
+    private func nightConditionAnimation(isNight: Bool, name: String) {
+        let animation = LottieAnimationView(name: name)
+        animation.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
+        animation.loopMode = .loop
+        animation.contentMode = .scaleAspectFill
+        animation.play()
+        self.conditionBackground.addSubview(animation)
+        self.conditionBackground.addSubview(animation)
     }
     
     private func cacheForecast(){
