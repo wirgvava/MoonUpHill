@@ -95,6 +95,7 @@ extension DetailedForecastVC: UICollectionViewDelegate, UICollectionViewDataSour
         dateFormatter.dateFormat = "MMM d"
         dateLabel.text = "\(dateFormatter.string(from: date))"
         detailLabel.text = "Feels like : \(forecastData.feels_like.day.toString()) °C \nThe high will be : \(forecastData.temp.max.toString()) °C \nThe low will be : \(forecastData.temp.min.toString()) °C \nHumidity : \(forecastData.humidity.toString()) % \nWind speed: \(forecastData.wind_speed.toString()) m/s"
+        AppAnalytics.logEvents(with: .choosen_another_day, paramName: nil, paramData: nil)
         UserDefaultsManager.shared.save(false, for: .firstSelected)
     }
 }

@@ -97,6 +97,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     private func presentDetailedForecast(){
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let forecastPresentationController = storyboard.instantiateViewController(withIdentifier: "detailedForecast") as! DetailedForecastVC
+        AppAnalytics.logEvents(with: .opened_forecast, paramName: nil, paramData: nil)
         self.present(forecastPresentationController, animated: true, completion: nil)
     }
     
@@ -131,6 +132,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         UserDefaultsManager.shared.saveAppGroupDefaults(model.conditionBackground, for: .widgetBG)
         
         WidgetCenter.shared.reloadTimelines(ofKind: "WeatherWidget")
+        AppAnalytics.logEvents(with: .location, paramName: .city, paramData: model.cityName)
     }
     
     private func checkNightCondition(with model: WeatherModel){
