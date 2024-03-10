@@ -28,7 +28,7 @@ class DetailedForecastVC: UIViewController, UISheetPresentationControllerDelegat
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
         self.collectionView.reloadData()
-        UserDefaults.standard.set(true, forKey: "firstSelected")
+        UserDefaultsManager.shared.save(true, for: .firstSelected)
     }
     
     //MARK: - Methods
@@ -81,7 +81,7 @@ extension DetailedForecastVC: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! ForecastCollectionViewCell
         let forecast = ViewController.forecast[indexPath.row]
-        if UserDefaults.standard.bool(forKey: "firstSelected") {
+        if UserDefaultsManager.shared.getBool(from: .firstSelected) {
             collectionView.selectItem(at: [0,0], animated: true, scrollPosition: .top)
         }
         cell.configure(with: forecast)
@@ -95,6 +95,6 @@ extension DetailedForecastVC: UICollectionViewDelegate, UICollectionViewDataSour
         dateFormatter.dateFormat = "MMM d"
         dateLabel.text = "\(dateFormatter.string(from: date))"
         detailLabel.text = "Feels like : \(forecastData.feels_like.day.toString()) °C \nThe high will be : \(forecastData.temp.max.toString()) °C \nThe low will be : \(forecastData.temp.min.toString()) °C \nHumidity : \(forecastData.humidity.toString()) % \nWind speed: \(forecastData.wind_speed.toString()) m/s"
-        UserDefaults.standard.set(false, forKey: "firstSelected")
+        UserDefaultsManager.shared.save(false, for: .firstSelected)
     }
 }

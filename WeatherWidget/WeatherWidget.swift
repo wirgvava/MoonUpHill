@@ -26,15 +26,14 @@ struct Provider: TimelineProvider {
         var isNight = false
         
         if let currentHour = calendar.dateComponents([.hour], from: currentDate).hour {
-            isNight = currentHour > 21 ? true : false
+            isNight = currentHour > 20 || currentHour < 5 ? true : false
         }
 
-        guard let appGroups = Bundle.main.infoDictionary?["APP_GROUP"] as? String else { return }
-        guard let defaults = UserDefaults(suiteName: appGroups) else { return }
-        let city = defaults.string(forKey: "widgetCity") ?? "Tbilisi"
-        let temperature = defaults.integer(forKey: "widgetTemp")
-        let conditionImage = defaults.string(forKey: "widgetCondition") ?? ""
-        let bg = isNight ? "night" : defaults.string(forKey: "widgetBG") ?? "Sunny"
+        let defaults = UserDefaultsManager.shared
+        let city = defaults.getAppGroupDefaultsString(from: .widgetCity) ?? "Tbilisi"
+        let temperature = defaults.getAppGroupDefaultsInt(from: .widgetTemp) ?? 0
+        let conditionImage = defaults.getAppGroupDefaultsString(from: .widgetCondition) ?? "isClear"
+        let bg = isNight ? "night" : defaults.getAppGroupDefaultsString(from: .widgetBG) ?? "Sunny"
         
         let entry = SimpleEntry(date: .now, city: city, bg: bg, conditionImage: conditionImage,temperature: temperature)
         entries.append(entry)
@@ -69,10 +68,16 @@ struct WeatherWidgetEntryView : View {
                     .foregroundColorBy(entry: entry)
                 
                 HStack{
-                    Image(entry.conditionImage)
-                        .resizable()
-                        .frame(width: 50, height: 50)
-                        .shadow(color: .black, radius: 20, x: 0.0, y: 0.0)
+                    if entry.bg == "night" {
+                        Image(entry.conditionImage).resizable().frame(width: 50, height: 50)
+                            .shadow(color: .black, radius: 20, x: 0.0, y: 0.0)
+                            .saturation(-1).contrast(1.4)
+                    } else {
+                        Image(entry.conditionImage)
+                            .resizable()
+                            .frame(width: 50, height: 50)
+                            .shadow(color: .black, radius: 20, x: 0.0, y: 0.0)
+                    }
                     
                     Text("\(entry.temperature) °C")
                         .font(.custom("Avenir Next", size: 20))
@@ -114,12 +119,21 @@ extension Text {
     }
 }
 
+extension Image {
+    func filterCondition(by entry: Provider.Entry) -> Image {
+        if entry.bg == "night" {
+            return self.saturation(-1) as! Image
+        }
+        return self
+    }
+}
+
 #Preview(as: .systemSmall) {
     WeatherWidget()
 } timeline: {
     SimpleEntry(date: .now, city: "London", bg: "Sunny", conditionImage: "imClear", temperature: 25)
     SimpleEntry(date: .now, city: "London", bg: "Rainy", conditionImage: "imRain", temperature: 19)
-    SimpleEntry(date: .now, city: "London", bg: "night", conditionImage: "imCloud", temperature: 20)
+    SimpleEntry(date: .now, city: "London", bg: "night", conditionImage: "imThunder", temperature: 20)
     SimpleEntry(date: .now, city: "London", bg: "Snowy", conditionImage: "imSnow", temperature: -2)
     SimpleEntry(date: .now, city: "London", bg: "Thunder", conditionImage: "imThunder", temperature: 6)
 }

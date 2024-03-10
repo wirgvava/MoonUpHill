@@ -13,8 +13,8 @@ class WeatherManager {
     private let API_KEY = Bundle.main.infoDictionary?["API_KEY"] as? String ?? ""
     
     //MARK: - Fetch weather by location
-    func fetchWeather(lat: Double, lon: Double, completion: @escaping (Result<WeatherModel, Error>) -> Void) {
-        let url = "https://api.openweathermap.org/data/2.5/weather?appid=\(API_KEY)&units=metric&lat=\(lat)&lon=\(lon)"
+    func fetchWeather(lat: Double, lng: Double, completion: @escaping (Result<WeatherModel, Error>) -> Void) {
+        let url = "https://api.openweathermap.org/data/2.5/weather?appid=\(API_KEY)&units=metric&lat=\(lat)&lon=\(lng)"
         handleRequest(urlString: url, completion: completion)
     }
     
