@@ -127,6 +127,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         LottieAnimations.animate(background: conditionBackground, with: model)
         
         // Save App Groups UserDefaults
+        UserDefaultsManager.shared.save(model.cityName, for: .nameOfCity)
         UserDefaultsManager.shared.saveAppGroupDefaults(model.cityName, for: .widgetCity)
         UserDefaultsManager.shared.saveAppGroupDefaults(model.temp, for: .widgetTemp)
         UserDefaultsManager.shared.saveAppGroupDefaults(model.conditionBackground, for: .widgetBG)
@@ -159,8 +160,6 @@ extension ViewController {
         weatherManager.fetchWeather(lat: lat, lng: lng) {[weak self] (result) in
             guard let this = self else { return }
             this.handleResult(result)
-            let city = this.cityLabel.text ?? ""
-            UserDefaultsManager.shared.save(city, for: .nameOfCity)
         }
     }
     
