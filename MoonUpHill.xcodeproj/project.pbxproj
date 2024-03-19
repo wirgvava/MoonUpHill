@@ -28,6 +28,8 @@
 		A550FC922B98FA4A0030D6AC /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A550FC912B98FA4A0030D6AC /* UIViewController+Extensions.swift */; };
 		A550FC962B98FBED0030D6AC /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A550FC952B98FBED0030D6AC /* LocationManager.swift */; };
 		A56531CF2B9DD41A00846657 /* AppAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56531CE2B9DD41A00846657 /* AppAnalytics.swift */; };
+		A58CD89A2BA61C1800469FC6 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = A58CD8992BA61C1800469FC6 /* PrivacyInfo.xcprivacy */; };
+		A58CD89D2BA61EB300469FC6 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = A58CD89C2BA61EB300469FC6 /* PrivacyInfo.xcprivacy */; };
 		A58E40142B964DE100B96F21 /* rain.json in Resources */ = {isa = PBXBuildFile; fileRef = A58E40132B964DE100B96F21 /* rain.json */; };
 		A58E40262B96573500B96F21 /* snow.json in Resources */ = {isa = PBXBuildFile; fileRef = A58E40252B96573500B96F21 /* snow.json */; };
 		A59AB90B29A41BD00029EA4E /* DetailedForecastVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59AB90A29A41BD00029EA4E /* DetailedForecastVC.swift */; };
@@ -98,6 +100,8 @@
 		A550FC912B98FA4A0030D6AC /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		A550FC952B98FBED0030D6AC /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		A56531CE2B9DD41A00846657 /* AppAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAnalytics.swift; sourceTree = "<group>"; };
+		A58CD8992BA61C1800469FC6 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		A58CD89C2BA61EB300469FC6 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		A58E40132B964DE100B96F21 /* rain.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = rain.json; sourceTree = "<group>"; };
 		A58E40252B96573500B96F21 /* snow.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = snow.json; sourceTree = "<group>"; };
 		A59AB90A29A41BD00029EA4E /* DetailedForecastVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedForecastVC.swift; sourceTree = "<group>"; };
@@ -165,6 +169,7 @@
 				A59AB90029A3E77E0029EA4E /* Animations */,
 				A54D09342996EFE0007CF531 /* Assets.xcassets */,
 				A54D09362996EFE0007CF531 /* LaunchScreen.storyboard */,
+				A58CD8992BA61C1800469FC6 /* PrivacyInfo.xcprivacy */,
 				A5DC46892B93652200D4CD06 /* Release.xcconfig */,
 				A5BEA7A12B9FA55B00789416 /* GoogleService-Info.plist */,
 				A54D09392996EFE0007CF531 /* Info.plist */,
@@ -208,6 +213,7 @@
 				A5335FF02B94AD5100E704D1 /* Assets.xcassets */,
 				A5335FF22B94AD5100E704D1 /* Info.plist */,
 				A5C24B2A2B94CFD000CE62B1 /* Release.xcconfig */,
+				A58CD89C2BA61EB300469FC6 /* PrivacyInfo.xcprivacy */,
 			);
 			path = WeatherWidget;
 			sourceTree = "<group>";
@@ -464,6 +470,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A58CD89D2BA61EB300469FC6 /* PrivacyInfo.xcprivacy in Resources */,
 				A5335FF12B94AD5100E704D1 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -475,6 +482,7 @@
 				A58E40262B96573500B96F21 /* snow.json in Resources */,
 				A5BEA7A22B9FA55B00789416 /* GoogleService-Info.plist in Resources */,
 				A54D09382996EFE0007CF531 /* LaunchScreen.storyboard in Resources */,
+				A58CD89A2BA61C1800469FC6 /* PrivacyInfo.xcprivacy in Resources */,
 				A58E40142B964DE100B96F21 /* rain.json in Resources */,
 				A517428B29DCCFB400DF67A1 /* LocationMarker.json in Resources */,
 				A54D09352996EFE0007CF531 /* Assets.xcassets in Resources */,
@@ -587,7 +595,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = WeatherWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = NW6K64987Z;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -625,7 +633,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = WeatherWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = NW6K64987Z;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -779,7 +787,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Weather/Weather.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = NW6K64987Z;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -821,7 +829,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Weather/Weather.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = NW6K64987Z;
 				GENERATE_INFOPLIST_FILE = YES;
