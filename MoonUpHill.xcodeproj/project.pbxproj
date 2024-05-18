@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		A517428B29DCCFB400DF67A1 /* LocationMarker.json in Resources */ = {isa = PBXBuildFile; fileRef = A517428A29DCCFB400DF67A1 /* LocationMarker.json */; };
 		A51FCCBB29A78DB900619400 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51FCCBA29A78DB900619400 /* Double+Extension.swift */; };
+		A52EDC7B2BF8C8420026732B /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = A52EDC7A2BF8C8420026732B /* GoogleMobileAds */; };
+		A52EDC7D2BF8DCC30026732B /* AppOpenAdManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52EDC7C2BF8DCC30026732B /* AppOpenAdManager.swift */; };
 		A530AFB329AE7DC20052A1A2 /* ForecastCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A530AFB229AE7DC20052A1A2 /* ForecastCollectionViewCell.swift */; };
 		A5335FE82B94AD5000E704D1 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5335FE72B94AD5000E704D1 /* WidgetKit.framework */; };
 		A5335FEA2B94AD5000E704D1 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5335FE92B94AD5000E704D1 /* SwiftUI.framework */; };
@@ -76,6 +78,7 @@
 /* Begin PBXFileReference section */
 		A517428A29DCCFB400DF67A1 /* LocationMarker.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = LocationMarker.json; sourceTree = "<group>"; };
 		A51FCCBA29A78DB900619400 /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
+		A52EDC7C2BF8DCC30026732B /* AppOpenAdManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppOpenAdManager.swift; sourceTree = "<group>"; };
 		A530AFB229AE7DC20052A1A2 /* ForecastCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastCollectionViewCell.swift; sourceTree = "<group>"; };
 		A5335FDF2B949AB700E704D1 /* Weather.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Weather.entitlements; sourceTree = "<group>"; };
 		A5335FE02B949BA400E704D1 /* WeatherWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WeatherWidgetExtension.entitlements; sourceTree = "<group>"; };
@@ -131,6 +134,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A52EDC7B2BF8C8420026732B /* GoogleMobileAds in Frameworks */,
 				A5BF5AD42BA0B6CC00D41564 /* Alamofire in Frameworks */,
 				A5BF5AD12BA0B6B600D41564 /* Loaf in Frameworks */,
 				A5BF5AD92BA0B71000D41564 /* FirebaseCrashlytics in Frameworks */,
@@ -194,6 +198,14 @@
 				A550FC912B98FA4A0030D6AC /* UIViewController+Extensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		A52EDC7E2BF8DCDE0026732B /* AppOpenAd */ = {
+			isa = PBXGroup;
+			children = (
+				A52EDC7C2BF8DCC30026732B /* AppOpenAdManager.swift */,
+			);
+			path = AppOpenAd;
 			sourceTree = "<group>";
 		};
 		A5335FE62B94AD5000E704D1 /* Frameworks */ = {
@@ -342,6 +354,7 @@
 		A5C891792B9714DF006A4152 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				A52EDC7E2BF8DCDE0026732B /* AppOpenAd */,
 				A550FC942B98FBE20030D6AC /* Location */,
 				A550FC932B98FBD80030D6AC /* UserDefaults */,
 			);
@@ -417,6 +430,7 @@
 				A5BF5AD32BA0B6CC00D41564 /* Alamofire */,
 				A5BF5AD62BA0B71000D41564 /* FirebaseAnalytics */,
 				A5BF5AD82BA0B71000D41564 /* FirebaseCrashlytics */,
+				A52EDC7A2BF8C8420026732B /* GoogleMobileAds */,
 			);
 			productName = Weather;
 			productReference = A54D09282996EFDF007CF531 /* MoonUpHill.app */;
@@ -454,6 +468,7 @@
 				A5BF5ACF2BA0B6B600D41564 /* XCRemoteSwiftPackageReference "Loaf" */,
 				A5BF5AD22BA0B6CC00D41564 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				A5BF5AD52BA0B71000D41564 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				A52EDC792BF8C8420026732B /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
 			);
 			productRefGroup = A54D09292996EFDF007CF531 /* Products */;
 			projectDirPath = "";
@@ -551,6 +566,7 @@
 				A5BE3E5B29AA6727001711DD /* View+Extension.swift in Sources */,
 				A550FC922B98FA4A0030D6AC /* UIViewController+Extensions.swift in Sources */,
 				A550FC782B98B83E0030D6AC /* CoreMotionAnimations.swift in Sources */,
+				A52EDC7D2BF8DCC30026732B /* AppOpenAdManager.swift in Sources */,
 				A5E886A229A6630F00217C1B /* WeatherError.swift in Sources */,
 				A550FC762B98B61B0030D6AC /* LottieAnimations.swift in Sources */,
 			);
@@ -595,7 +611,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = WeatherWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = NW6K64987Z;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -609,7 +625,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = ge.konstantine.weather.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -633,7 +649,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = WeatherWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = NW6K64987Z;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -647,7 +663,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = ge.konstantine.weather.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -787,9 +803,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Weather/Weather.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = NW6K64987Z;
+				GADAppOpenID = "ca-app-pub-7386410973532338/4381297121";
+				GADApplicationID = "ca-app-pub-7386410973532338~8737923651";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Weather/Resources/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.weather";
@@ -806,7 +824,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = ge.konstantine.weather;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -829,9 +847,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Weather/Weather.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = NW6K64987Z;
+				GADAppOpenID = "ca-app-pub-7386410973532338/4381297121";
+				GADApplicationID = "ca-app-pub-7386410973532338~8737923651";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Weather/Resources/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.weather";
@@ -848,7 +868,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = ge.konstantine.weather;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -894,6 +914,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		A52EDC792BF8C8420026732B /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.5.0;
+			};
+		};
 		A5BF5ACC2BA0B6A900D41564 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios";
@@ -929,6 +957,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		A52EDC7A2BF8C8420026732B /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A52EDC792BF8C8420026732B /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
+			productName = GoogleMobileAds;
+		};
 		A5BF5ACD2BA0B6A900D41564 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A5BF5ACC2BA0B6A900D41564 /* XCRemoteSwiftPackageReference "lottie-ios" */;

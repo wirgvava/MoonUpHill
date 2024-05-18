@@ -95,6 +95,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     
     private func presentDetailedForecast(){
+        guard ViewController.weatherModel != nil else { return }
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let forecastPresentationController = storyboard.instantiateViewController(withIdentifier: "detailedForecast") as! DetailedForecastVC
         AppAnalytics.logEvents(with: .opened_forecast, paramName: nil, paramData: nil)
